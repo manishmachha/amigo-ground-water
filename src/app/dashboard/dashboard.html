@@ -1,0 +1,459 @@
+<div class="bg-slate-50 ">
+
+  <!-- HEADER -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="max-w-12xl mx-auto px-6 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">
+          State Groundwater Analytics
+        </h1>
+        <p class="text-gray-500">
+          Comprehensive statewide groundwater resource monitoring & intelligence
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <select class="px-4 py-2 rounded-lg border border-gray-300 text-sm">
+          <option>Last 12 Months</option>
+          <option>Last 6 Months</option>
+          <option>Last 3 Months</option>
+        </select>
+
+        <button
+          class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-100 text-sm font-medium">
+          <i class="bi bi-download"></i>
+          Export Report
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="max-w-12xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+    <!-- LEFT CARD -->
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+      <h2 class="text-lg font-semibold text-gray-900">
+        Assessment Category Distribution
+      </h2>
+      <p class="text-sm text-gray-500 mb-6">
+        Statewide groundwater assessment classification
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+
+        <!-- Donut -->
+        <div class="flex justify-center">
+          <canvas id="assessmentChart" class="max-w-[240px]"></canvas>
+        </div>
+
+        <!-- Legend -->
+        <div class="space-y-4 text-sm">
+          <div class="flex justify-between">
+            <span class="flex items-center gap-2">
+              <span class="w-3 h-3 bg-emerald-500 rounded-full"></span>
+              Safe
+            </span>
+            <span class="font-medium">15,234 <span class="text-gray-500">53.2%</span></span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="flex items-center gap-2">
+              <span class="w-3 h-3 bg-amber-500 rounded-full"></span>
+              Semi-Critical
+            </span>
+            <span class="font-medium">7,123 <span class="text-gray-500">24.9%</span></span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="flex items-center gap-2">
+              <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+              Critical
+            </span>
+            <span class="font-medium">4,267 <span class="text-gray-500">14.9%</span></span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="flex items-center gap-2">
+              <span class="w-3 h-3 bg-red-900 rounded-full"></span>
+              Over-Exploited
+            </span>
+            <span class="font-medium">1,976 <span class="text-gray-500">6.9%</span></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT CARD -->
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+      <h2 class="text-lg font-semibold text-gray-900">
+        Extraction vs Permitted (MCM)
+      </h2>
+      <p class="text-sm text-gray-500 mb-6">
+        Rolling 12-month extraction analysis
+      </p>
+
+      <canvas id="extractionChart" height="120"></canvas>
+    </div>
+
+  </div>
+</div>
+<div class="max-w-12xl mx-auto px-6 pb-8 grid grid-cols-1 lg:grid-cols-3 gap-8 mt-16">
+
+  <!-- NOCs BY CATEGORY -->
+  <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+    <h3 class="text-lg font-semibold text-gray-900">NOCs by Category</h3>
+    <p class="text-sm text-gray-500 mb-6">
+      Total Active: <span class="font-medium text-gray-900">6,549</span>
+    </p>
+
+    <div class="space-y-6">
+      <div *ngFor="let c of nocCategories">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-medium text-gray-900">{{ c.name }}</span>
+          <span class="px-2 py-0.5 text-sm rounded-full bg-blue-50 text-blue-600">
+            {{ c.value }}
+          </span>
+        </div>
+
+        <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div
+            class="h-2 bg-gray-900 rounded-full"
+            [style.width.%]="c.percent">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLIANCE SNAPSHOT -->
+  <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+    <h3 class="text-lg font-semibold text-gray-900">Compliance Snapshot</h3>
+    <p class="text-sm text-gray-500 mb-6">
+      Key compliance metrics statewide
+    </p>
+
+    <div class="space-y-6">
+      <div *ngFor="let m of complianceMetrics">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-gray-900 font-medium">{{ m.label }}</span>
+          <div class="flex items-center gap-2">
+            <span class="font-semibold">{{ m.value }}%</span>
+
+            <span
+              class="w-6 h-6 flex items-center justify-center rounded-full text-xs"
+              [ngClass]="
+                m.status === 'ok'
+                ? 'bg-green-100 text-green-600'
+                : 'bg-orange-100 text-orange-600'
+              ">
+              <i class="bi"
+                 [ngClass]="m.status === 'ok' ? 'bi-check-lg' : 'bi-exclamation'">
+              </i>
+            </span>
+          </div>
+        </div>
+
+        <div class="w-full h-2 bg-gray-200 rounded-full">
+          <div
+            class="h-2 bg-gray-900 rounded-full"
+            [style.width.%]="m.value">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENFORCEMENT & BILLING -->
+  <div class="space-y-6">
+
+    <!-- VIOLATIONS -->
+    <div class="bg-red-50 border border-red-200 rounded-2xl p-6">
+      <div class="flex items-center gap-3 mb-3 text-red-600">
+        <i class="bi bi-exclamation-triangle text-xl"></i>
+        <h3 class="font-semibold">Active Violations</h3>
+      </div>
+
+      <p class="text-3xl font-bold text-red-800 mb-2">
+        247 Cases
+      </p>
+
+      <p class="text-sm text-red-700">
+        89 illegal wells · 67 over-extraction
+      </p>
+    </div>
+
+    <!-- REVENUE -->
+    <div class="bg-green-50 border border-green-200 rounded-2xl p-6">
+      <div class="flex items-center gap-3 mb-3 text-green-600">
+        <i class="bi bi-currency-rupee text-xl"></i>
+        <h3 class="font-semibold">Revenue Collection</h3>
+      </div>
+
+      <p class="text-3xl font-bold text-green-800 mb-2">
+        ₹847.3 Cr
+      </p>
+
+      <p class="text-sm text-green-700">
+        87.2% collection rate · ₹123.4 Cr pending
+      </p>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="max-w-12xl mx-auto px-6">
+  <div class="rounded-lg border shadow-sm bg-white border-slate-200">
+  <!-- HEADER -->
+  <div class="flex flex-col space-y-1.5 p-6">
+    <h3 class="text-2xl font-medium leading-none tracking-tight flex items-center justify-between">
+      <span>District-wise NOC Distribution</span>
+
+      <button
+        class="inline-flex items-center justify-center gap-2 text-sm font-medium h-9 rounded-md px-3
+               border border-gray-200 hover:bg-gray-100 cursor-pointer">
+        View Details
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </h3>
+
+    <p class="text-sm text-gray-500">
+      NOCs by district with critical/OE area breakdown
+    </p>
+  </div>
+
+  <!-- TABLE -->
+  <div class="p-6 pt-0">
+    <!-- <div class="relative w-full overflow-auto">
+
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="w-full caption-bottom text-sm mat-elevation-z2">
+
+        <ng-container matColumnDef="district">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header
+              class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
+            District
+          </th>
+          <td mat-cell *matCellDef="let row"
+              class="p-4 font-medium bg-white border-b">
+            {{ row.district }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalNocs">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header
+              class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
+            Total NOCs
+          </th>
+          <td mat-cell *matCellDef="let row"
+              class="p-4 bg-white border-b">
+            <span class="inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold
+                         bg-blue-100 text-blue-800">
+              {{ row.totalNocs }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="oeAreas">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header
+              class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
+            In OE Areas
+          </th>
+          <td mat-cell *matCellDef="let row"
+              class="p-4 bg-white border-b">
+            <span class="inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold
+                         bg-red-100 text-red-800">
+              {{ row.oeAreas }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="criticalAreas">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header
+              class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
+            In Critical
+          </th>
+          <td mat-cell *matCellDef="let row"
+              class="p-4 bg-white border-b">
+            <span class="inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold
+                         bg-orange-100 text-orange-800">
+              {{ row.criticalAreas }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="riskScore">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header
+              class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
+            Risk Score
+          </th>
+          <td mat-cell *matCellDef="let row"
+              class="p-4 bg-white border-b">
+            <span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                  [ngClass]="riskClass(row.riskScore)">
+              {{ row.riskScore }}%
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef
+              class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
+            Actions
+          </th>
+          <td mat-cell *matCellDef="let row"
+              class="p-4 bg-white border-b">
+            <button
+              class="inline-flex items-center justify-center h-9 rounded-md px-3
+                     border border-gray-200 hover:bg-gray-100 cursor-pointer">
+              View
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="tableHeaders"></tr>
+        <tr mat-row *matRowDef="let row; columns: tableHeaders"></tr>
+
+      </table>
+
+      <mat-paginator
+        class="bg-white"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 25]"
+        showFirstLastButtons>
+      </mat-paginator>
+
+    </div> -->
+  </div>
+</div>
+
+<div class="max-w-12xl mx-auto px-6 mt-8">
+  <div class="rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
+
+  <!-- Header -->
+  <div class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900">
+      GIS Heatmap Overview
+    </h2>
+    <p class="text-sm text-gray-500">
+      Spatial visualization of extraction hotspots and well density
+    </p>
+  </div>
+
+  <!-- Heatmap Placeholder -->
+  <div
+    class="relative flex flex-col items-center justify-center text-center
+           h-[320px] rounded-2xl border-2 border-dashed border-blue-300
+           bg-gradient-to-br
+           from-blue-50 via-cyan-50 via-emerald-50 to-yellow-50">
+
+    <!-- Icon -->
+    <div
+      class="mb-4 flex h-14 w-14 items-center justify-center
+             rounded-full bg-blue-100 text-blue-600">
+      <i class="bi bi-geo-alt-fill text-3xl"></i>
+    </div>
+
+    <!-- Title -->
+    <h3 class="text-lg font-semibold text-gray-900 mb-1">
+      Interactive GIS Visualization
+    </h3>
+
+    <!-- Description -->
+    <p class="text-sm text-gray-600 max-w-md mb-6">
+      Well density, extraction hotspots, declining WL zones,
+      and enforcement areas
+    </p>
+
+    <!-- Button -->
+    <button
+      class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5
+             text-sm font-medium text-white shadow
+             hover:bg-blue-700 transition">
+      <i class="bi bi-geo"></i>
+      Launch GIS Map
+    </button>
+
+  </div>
+
+</div>
+
+
+<div class="max-w-12xl mx-auto px-6 pb-12 mt-8">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+    <!-- Extraction vs Recharge -->
+    <div
+      class="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
+             hover:shadow-md transition cursor-pointer">
+
+      <!-- Arrow -->
+      <i class="bi bi-chevron-right absolute top-6 right-6 text-gray-400"></i>
+
+      <!-- Icon -->
+      <div class="mb-4 text-blue-600">
+        <i class="bi bi-graph-up-arrow text-3xl"></i>
+      </div>
+
+      <!-- Content -->
+      <h3 class="text-lg font-semibold text-gray-900 mb-1">
+        Extraction vs Recharge
+      </h3>
+      <p class="text-sm text-gray-600">
+        Sustainability analysis and gap assessment
+      </p>
+    </div>
+
+    <!-- Water Level Trends -->
+    <div
+      class="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
+             hover:shadow-md transition cursor-pointer">
+
+      <!-- Arrow -->
+      <i class="bi bi-chevron-right absolute top-6 right-6 text-gray-400"></i>
+
+      <!-- Icon -->
+      <div class="mb-4 text-cyan-600">
+        <i class="bi bi-activity text-3xl"></i>
+      </div>
+
+      <!-- Content -->
+      <h3 class="text-lg font-semibold text-gray-900 mb-1">
+        Water Level Trends
+      </h3>
+      <p class="text-sm text-gray-600">
+        Piezometer analysis and WL monitoring
+      </p>
+    </div>
+
+    <!-- Water Quality Trends -->
+    <div
+      class="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
+             hover:shadow-md transition cursor-pointer">
+
+      <!-- Arrow -->
+      <i class="bi bi-chevron-right absolute top-6 right-6 text-gray-400"></i>
+
+      <!-- Icon -->
+      <div class="mb-4 text-green-600">
+        <i class="bi bi-droplet-half text-3xl"></i>
+      </div>
+
+      <!-- Content -->
+      <h3 class="text-lg font-semibold text-gray-900 mb-1">
+        Water Quality Trends
+      </h3>
+      <p class="text-sm text-gray-600">
+        Parameter analysis and contamination tracking
+      </p>
+    </div>
+
+  </div>
+</div>

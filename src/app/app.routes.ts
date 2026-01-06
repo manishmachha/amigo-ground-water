@@ -5,6 +5,14 @@ import { MonitoringCompliance } from './monitoring-compliance/monitoring-complia
 import { NocPermissions } from './noc-permissions/noc-permissions';
 import { publishFacade } from '@angular/compiler';
 import { PublicHome } from './public-home/public-home';
+import { CitizenPortal } from './citizen-portal/citizen-portal';
+import { CitizenProfile } from './citizen-profile/citizen-profile';
+import { Dashboard } from './dashboard/dashboard';
+import { EnforcementViolations } from './enforcement-violations/enforcement-violations';
+import { ReportViolation } from './report-violation/report-violation';
+import { SubmitGreviance } from './submit-greviance/submit-greviance';
+import { WellAssets } from './well-assets/well-assets';
+import { WellRegister } from './well-register/well-register';
 
 export const routes: Routes = [
   { path: '', loadChildren: () => import('./login/login.routes').then((m) => m.loginRoutes) },
@@ -15,5 +23,12 @@ export const routes: Routes = [
   { path: 'public-home', component: PublicHome},
   { path: 'rig-management', loadChildren: () => import('./rig-management-module/rig-management.routes').then((m) => m.rigManagementRoutes) },
   { path: 'tanker-bulk', loadChildren: () => import('./tanker-bulk-supply-module/tanker-bulk-supply.routes').then((m) => m.TankerBulkSupplyRoutes) },
-
+  { path: 'well-register', component: WellRegister },
+  { path: 'citizen-portal', component: CitizenPortal },
+  { path: 'report-voilation', component: ReportViolation },
+  { path: 'submit-greviance', component: SubmitGreviance },
+  { path: 'profile', component: CitizenProfile },
+  { path: 'dashboard', component: Dashboard },
+  { path: 'enforcement-violations', component: EnforcementViolations },
+  { path: 'well-assets', component: WellAssets },
 ];

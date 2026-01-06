@@ -1,0 +1,311 @@
+<div class=" bg-slate-50 p-6">
+
+  <!-- Header -->
+  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">
+        Enforcement & Violations
+      </h1>
+      <p class="text-sm text-gray-500">
+        WALTA Forms 7-11 · Offences · Seizures · Penalties
+      </p>
+    </div>
+
+    <div class="flex gap-3">
+      <button
+        class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm hover:bg-gray-50">
+        <i class="bi bi-download"></i>
+        Export Report
+      </button>
+
+      <button
+        class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 text-white text-sm hover:bg-red-700">
+        <i class="bi bi-plus-circle"></i>
+        Register Offence
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="flex flex-wrap gap-4 mb-8">
+    <select class="px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm">
+      <option>All Districts</option>
+    </select>
+
+    <select class="px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm">
+      <option>All Offence Types</option>
+    </select>
+
+    <select class="px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm">
+      <option>All Severities</option>
+    </select>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class=" max-w-12xl grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+
+    <div *ngFor="let s of stats"
+         class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+
+      <div class="flex items-start justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center"
+             [ngClass]="s.bg">
+          <i class="bi text-xl"
+             [ngClass]="[s.icon, s.color]"></i>
+        </div>
+      </div>
+
+      <p class="text-xs font-medium tracking-wide text-gray-500 uppercase">
+        {{ s.title }}
+      </p>
+
+      <h2 class="text-3xl font-bold text-gray-900 mt-2">
+        {{ s.value }}
+      </h2>
+
+      <p class="text-sm text-gray-500 mt-1">
+        {{ s.sub }}
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+<div class=" max-w-12xl grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+  <!-- CASES BY SEVERITY -->
+  <div class=" bg-white rounded-2xl border border-gray-200 p-6">
+    <h3 class="text-lg font-semibold text-gray-900">
+      Cases by Severity
+    </h3>
+    <p class="text-sm text-gray-500 mb-6">
+      Distribution across risk levels
+    </p>
+
+    <div *ngFor="let s of severityStats" class="mb-6">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-medium text-gray-700">
+          {{ s.label }}
+        </span>
+        <span class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700">
+          {{ s.value }}
+        </span>
+      </div>
+
+      <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div
+          class="h-full rounded-full"
+          [ngClass]="s.color"
+          [style.width.%]="s.percent">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENFORCEMENT HOTSPOTS -->
+  <div class="bg-white rounded-2xl border border-gray-200 p-6">
+    <h3 class="text-lg font-semibold text-gray-900">
+      Enforcement Hotspots
+    </h3>
+    <p class="text-sm text-gray-500 mb-6">
+      Districts with highest violations
+    </p>
+
+    <div *ngFor="let h of hotspots"
+         class="flex items-center justify-between p-4 mb-3 rounded-xl bg-gray-50">
+
+      <div class="flex items-center gap-3">
+        <i class="bi bi-geo-alt-fill text-red-500 text-lg"></i>
+        <span class="font-medium text-gray-900">
+          {{ h.name }}
+        </span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-bold text-gray-900">
+          {{ h.count }}
+        </span>
+        <span class="text-xs px-2 py-1 rounded-lg"
+              [ngClass]="h.deltaColor">
+          {{ h.delta }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="bg-white rounded-2xl border border-gray-200 p-6">
+    <h3 class="text-lg font-semibold text-gray-900">
+      Quick Actions
+    </h3>
+    <p class="text-sm text-gray-500 mb-6">
+      Common enforcement workflows
+    </p>
+
+    <div *ngFor="let q of quickActions"
+         class="flex items-center justify-between p-5 mb-4 rounded-xl
+                border border-gray-200 hover:shadow-sm cursor-pointer">
+
+      <div class="flex items-center gap-4">
+        <i class="bi text-blue-600 text-xl" [ngClass]="q.icon"></i>
+        <span class="font-medium text-gray-900">
+          {{ q.label }}
+        </span>
+      </div>
+
+      <i class="bi bi-arrow-up-right text-gray-400"></i>
+    </div>
+  </div>
+
+</div>
+<div class=" max-w bg-white rounded-2xl border border-gray-200 shadow-sm mt-9">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100 ">
+    <div>
+      <h2 class="text-lg font-semibold text-gray-900">
+        Recent Enforcement Cases
+      </h2>
+      <p class="text-sm text-gray-500">
+        Latest violations and actions taken
+      </p>
+    </div>
+
+    <button class="text-sm font-medium text-blue-600 hover:underline">
+      View All
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="relative w-full overflow-auto">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="w-full text-sm">
+
+      <!-- Case ID -->
+      <ng-container matColumnDef="caseId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header
+            class="px-6 py-4 text-left font-medium text-gray-500">
+          Case ID
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="px-6 py-4 font-medium text-blue-600">
+          {{ row.caseId }}
+        </td>
+      </ng-container>
+
+      <!-- Type -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef
+            class="px-6 py-4 text-left font-medium text-gray-500">
+          Type
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="px-6 py-4">
+          {{ row.type }}
+        </td>
+      </ng-container>
+
+      <!-- Location -->
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef
+            class="px-6 py-4 text-left font-medium text-gray-500">
+          Location
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="px-6 py-4">
+          {{ row.location }}
+        </td>
+      </ng-container>
+
+      <!-- Severity -->
+      <ng-container matColumnDef="severity">
+        <th mat-header-cell *matHeaderCellDef
+            class="px-6 py-4 text-left font-medium text-gray-500">
+          Severity
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="px-6 py-4">
+          <span
+            class="px-3 py-1 rounded-full text-xs font-medium"
+            [ngClass]="severityClass(row.severity)">
+            {{ row.severity }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Status -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef
+            class="px-6 py-4 text-left font-medium text-gray-500">
+          Status
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="px-6 py-4">
+          <span
+            class="px-3 py-1 rounded-full text-xs font-medium"
+            [ngClass]="statusClass(row.status)">
+            {{ row.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Date -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef
+            class="px-6 py-4 text-left font-medium text-gray-500">
+          Date
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="px-6 py-4 text-gray-700">
+          {{ row.date }}
+        </td>
+      </ng-container>
+
+      <!-- Officer -->
+      <ng-container matColumnDef="officer">
+        <th mat-header-cell *matHeaderCellDef
+            class="px-6 py-4 text-left font-medium text-gray-500">
+          Officer
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="px-6 py-4">
+          {{ row.officer }}
+        </td>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef
+            class="px-6 py-4 text-left font-medium text-gray-500">
+          Actions
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="px-6 py-4">
+          <button class="font-medium text-gray-900 hover:underline">
+            View Details
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"
+          class="bg-gray-50"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"
+          class="border-b border-gray-100 hover:bg-gray-50"></tr>
+
+    </table>
+  </div>
+
+  <!-- Paginator -->
+  <mat-paginator
+    class="border-t border-gray-100"
+    [pageSize]="5"
+    [pageSizeOptions]="[5,10,25]"
+    showFirstLastButtons>
+  </mat-paginator>
+
+</div>

@@ -1,0 +1,286 @@
+<div class="bg-slate-50">
+
+  <!-- HEADER -->
+  <header class="bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white">
+          <i class="bi bi-droplet-half text-lg"></i>
+        </div>
+        <div>
+          <h1 class="font-medium text-gray-900">Citizen Portal</h1>
+          <p class="text-xs text-gray-500">TG-GWRMS</p>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div class="flex items-center gap-5">
+        <div class="relative">
+          <i class="bi bi-bell text-xl text-gray-500"></i>
+          <span class="absolute -top-1 -right-1 w-2 h-2  rounded-full"></span>
+        </div>
+
+        <button routerLink="/profile"
+          class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100">
+          <i class="bi bi-person"></i>
+          Profile
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="max-w-7xl mx-auto px-6 py-10">
+
+    <!-- Welcome -->
+    <h2 class="text-3xl font-bold text-gray-900 mb-2">
+      Welcome Back!
+    </h2>
+    <p class="text-gray-600 mb-8">
+      Manage your applications, grievances, and documents
+    </p>
+
+    <!-- Search -->
+    <div class="max-w-3xl mb-12 relative">
+      <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+      <input type="text" [(ngModel)]="searchText" placeholder="Search applications, grievances, or documents..." class="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-300 shadow-sm
+               " />
+    </div>
+
+    <!-- ACTION CARDS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <div *ngFor="let action of actions" [routerLink]="action.routerLink" class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
+               hover:shadow-md transition cursor-pointer">
+
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 text-white" [ngClass]="action.bg">
+          <i class="bi {{ action.icon }} text-2xl"></i>
+        </div>
+
+        <h3 class="text-lg font-medium text-gray-900 mb-4">
+          {{ action.title }}
+        </h3>
+
+        <div class="text-blue-600 flex items-center gap-2 font-medium">
+          <!-- <span>Explore</span> -->
+          <i class="bi bi-arrow-right"></i>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+  <!-- MY APPLICATIONS -->
+  <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl font-medium text-gray-900">My Applications</h2>
+        <p class="text-sm text-gray-500">
+          Track your NOC and well registration applications
+        </p>
+      </div>
+
+      <a class="text-blue-600 font-medium cursor-pointer hover:underline">
+        View All
+      </a>
+    </div>
+
+    <!-- Application List -->
+    <div class="space-y-4">
+
+      <div *ngFor="let app of applications" class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
+
+        <!-- Left -->
+        <div>
+          <h3 class="font-medium text-gray-900">
+            {{ app.title }}
+          </h3>
+          <p class="text-sm text-gray-500 mb-2">
+            {{ app.id }}
+          </p>   
+
+          <div class="text-sm text-gray-600 flex flex-wrap gap-4">
+            <span>Submitted: {{ app.createdAt }}</span>
+            <span>Stage: {{ app.stage }}</span>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="flex items-center gap-2 px-3 py-1 rounded-full border text-sm font-medium"
+          [ngClass]="app.statusColor">
+          <i class="bi {{ app.icon }}"></i>
+          {{ app.status }}
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-6">
+      <button class="w-full py-3 rounded-xl border border-gray-300 text-gray-700
+               font-medium hover:bg-gray-100 flex items-center justify-center gap-2">
+        View All Applications
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+
+    <h2 class="text-xl font-medium text-gray-900 mb-6">
+      Notifications
+    </h2>
+
+    <div class="space-y-4">
+
+      <div *ngFor="let note of notifications" class="bg-gray-50 rounded-xl p-4">
+
+        <p class="text-sm text-gray-900">
+          {{ note.message }}
+        </p>
+        <p class="text-xs text-gray-500 mt-1">
+          {{ note.time }}
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="mt-6 text-center">
+      <a class="text-blue-600 font-medium cursor-pointer hover:underline">
+        View All Notifications
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+  <!-- MY GRIEVANCES -->
+  <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl font-medium text-gray-900">My Grievances</h2>
+        <p class="text-sm text-gray-500">
+          Track your submitted complaints and issues
+        </p>
+      </div>
+      <a class="text-blue-600 font-medium hover:underline cursor-pointer">
+        View All
+      </a>
+    </div>
+
+    <!-- Grievance List -->
+    <div class="space-y-4 mb-6">
+
+      <div *ngFor="let g of grievances" class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
+
+        <div>
+          <h3 class="font-medium text-gray-900">
+            {{ g.complainantName }}
+          </h3>
+          <p class="text-sm text-gray-500 mb-2">
+            {{ g.ticketNumber }}
+          </p>
+          <p class="text-sm text-gray-600">
+            Submitted: {{ g.submittedOn }}
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 px-3 py-1 rounded-full border text-sm font-medium"
+          [ngClass]="g.statusClass">
+          <i class="bi {{ g.icon }}"></i>
+          {{ g.status }}
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <button class="w-full py-3 rounded-xl bg-blue-600 text-white font-medium
+             hover:bg-blue-700 flex items-center justify-center gap-2">
+      <i class="bi bi-chat-dots"></i>
+      Submit New Grievance
+    </button>
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="space-y-8">
+
+    <!-- RECENT DOCUMENTS -->
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+
+      <h2 class="text-xl font-medium text-gray-900 mb-6">
+        Recent Documents
+      </h2>
+
+      <div class="space-y-4">
+
+        <div *ngFor="let doc of documents" class="flex items-start justify-between">
+
+          <div class="flex items-start gap-3">
+            <i class="bi bi-file-earmark-text text-gray-400 text-xl"></i>
+            <div>
+              <p class="font-medium text-gray-900">
+                {{ doc.name }}
+              </p>
+              <p class="text-sm text-gray-500">
+                {{ doc.date }}
+              </p>
+            </div>
+          </div>
+
+          <i class="bi bi-download text-blue-600 cursor-pointer"></i>
+        </div>
+
+      </div>
+
+      <div class="mt-6 text-center">
+        <a class="text-blue-600 font-medium hover:underline cursor-pointer">
+          View All Documents
+        </a>
+      </div>
+
+    </div>
+
+    <!-- NEED HELP -->
+    <div class="bg-blue-50 rounded-2xl border border-blue-200 p-6">
+
+      <h3 class="text-lg font-medium text-gray-900 mb-2">
+        Need Help?
+      </h3>
+      <p class="text-sm text-gray-600 mb-4">
+        Contact us for assistance with your applications
+      </p>
+
+      <div class="space-y-3 text-sm">
+        <div class="flex items-center gap-2">
+          <i class="bi bi-telephone text-blue-600"></i>
+          040-23111111
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="bi bi-envelope text-blue-600"></i>
+          support@tggroundwater.gov.in
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
