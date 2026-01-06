@@ -26,7 +26,7 @@ export class Userlogin {
       this.authService.setLoginStatus(true);
       this.authService.setAuthToken(event.response.data.tokens.refreshToken);
       this.authService.setUserRole(event.response.data.user.role.name);
-      this.router.navigate(['/posts']);
+      this.router.navigate(['/citizen-portal']);
     }
   }
 

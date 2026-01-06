@@ -10,7 +10,7 @@
           <i class="bi bi-droplet-half text-lg"></i>
         </div>
         <div>
-          <h1 class="font-medium text-gray-900">Citizen Portal</h1>
+          <h1 class="font-semibold text-gray-900">Citizen Portal</h1>
           <p class="text-xs text-gray-500">TG-GWRMS</p>
         </div>
       </div>
@@ -59,7 +59,7 @@
           <i class="bi {{ action.icon }} text-2xl"></i>
         </div>
 
-        <h3 class="text-lg font-medium text-gray-900 mb-4">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">
           {{ action.title }}
         </h3>
 
@@ -81,30 +81,32 @@
     <!-- Header -->
     <div class="flex items-center justify-between mb-6">
       <div>
-        <h2 class="text-xl font-medium text-gray-900">My Applications</h2>
+        <h2 class="text-xl font-semibold text-gray-900">My Applications</h2>
         <p class="text-sm text-gray-500">
           Track your NOC and well registration applications
         </p>
       </div>
 
-      <a class="text-blue-600 font-medium cursor-pointer hover:underline">
-        View All
+      <a class="text-blue-600 font-medium cursor-pointer hover:underline" (click)="toggleViewAll()">
+        {{ showAllApplications ? 'View Less' : 'View All' }}
       </a>
+
     </div>
 
     <!-- Application List -->
-    <div class="space-y-4">
+    <div class="space-y-4 transition-all duration-300"
+      [ngClass]="showAllApplications ? 'max-h-[420px] overflow-y-auto pr-2' : ''">
 
-      <div *ngFor="let app of applications" class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
+      <div *ngFor="let app of visibleApplications()" class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
 
         <!-- Left -->
         <div>
-          <h3 class="font-medium text-gray-900">
+          <h3 class="font-semibold text-gray-900">
             {{ app.title }}
           </h3>
           <p class="text-sm text-gray-500 mb-2">
             {{ app.id }}
-          </p>   
+          </p>
 
           <div class="text-sm text-gray-600 flex flex-wrap gap-4">
             <span>Submitted: {{ app.createdAt }}</span>
@@ -120,15 +122,18 @@
         </div>
 
       </div>
-
     </div>
+
 
     <!-- Footer -->
     <div class="mt-6">
-      <button class="w-full py-3 rounded-xl border border-gray-300 text-gray-700
-               font-medium hover:bg-gray-100 flex items-center justify-center gap-2">
-        View All Applications
-        <i class="bi bi-chevron-right"></i>
+      <button class="w-full py-3 rounded-xl border border-gray-300 text-gray-700 cursor-pointer
+         font-medium hover:bg-gray-100 flex items-center justify-center gap-2" (click)="toggleViewAll()">
+
+        {{ showAllApplications ? 'View Less Applications' : 'View All Applications' }}
+
+        <i class="bi" [ngClass]="showAllApplications ? 'bi-chevron-up' : 'bi-chevron-right'"></i>
+
       </button>
     </div>
 
@@ -137,7 +142,7 @@
   <!-- NOTIFICATIONS -->
   <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
 
-    <h2 class="text-xl font-medium text-gray-900 mb-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-6">
       Notifications
     </h2>
 
@@ -157,7 +162,7 @@
     </div>
 
     <div class="mt-6 text-center">
-      <a class="text-blue-600 font-medium cursor-pointer hover:underline">
+      <a class="text-blue-600 font-medium cursor-pointer hover:underline ">
         View All Notifications
       </a>
     </div>
@@ -174,23 +179,24 @@
     <!-- Header -->
     <div class="flex items-center justify-between mb-6">
       <div>
-        <h2 class="text-xl font-medium text-gray-900">My Grievances</h2>
+        <h2 class="text-xl font-semibold text-gray-900">My Grievances</h2>
         <p class="text-sm text-gray-500">
           Track your submitted complaints and issues
         </p>
       </div>
-      <a class="text-blue-600 font-medium hover:underline cursor-pointer">
-        View All
+      <a class="text-blue-600 font-medium cursor-pointer hover:underline" (click)="grievanceViewAll()">
+        {{ showAllGrievances ? 'View Less' : 'View All' }}
       </a>
     </div>
 
     <!-- Grievance List -->
-    <div class="space-y-4 mb-6">
+    <div class="space-y-4 transition-all duration-300"
+      [ngClass]="showAllGrievances ? 'max-h-[420px] overflow-y-auto pr-2' : ''">
 
-      <div *ngFor="let g of grievances" class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
+      <div *ngFor="let g of visibleGrievances()" class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
 
         <div>
-          <h3 class="font-medium text-gray-900">
+          <h3 class="font-semibold text-gray-900">
             {{ g.complainantName }}
           </h3>
           <p class="text-sm text-gray-500 mb-2">
@@ -212,8 +218,8 @@
     </div>
 
     <!-- CTA -->
-    <button class="w-full py-3 rounded-xl bg-blue-600 text-white font-medium
-             hover:bg-blue-700 flex items-center justify-center gap-2">
+    <button class="w-full py-3 rounded-xl bg-blue-600 text-white font-medium cursor-pointer
+             hover:bg-blue-700 flex items-center justify-center gap-2" routerLink="/submit-greviance">
       <i class="bi bi-chat-dots"></i>
       Submit New Grievance
     </button>
@@ -226,7 +232,7 @@
     <!-- RECENT DOCUMENTS -->
     <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
 
-      <h2 class="text-xl font-medium text-gray-900 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-6">
         Recent Documents
       </h2>
 
@@ -262,7 +268,7 @@
     <!-- NEED HELP -->
     <div class="bg-blue-50 rounded-2xl border border-blue-200 p-6">
 
-      <h3 class="text-lg font-medium text-gray-900 mb-2">
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
         Need Help?
       </h3>
       <p class="text-sm text-gray-600 mb-4">

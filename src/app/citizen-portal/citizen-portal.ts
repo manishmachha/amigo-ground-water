@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, OnInit } from '@angular/core';
+import {  OnInit } from '@angular/core';
 import { CitizenProfileService } from '../services/citizen-portal-service';
 import { AmigoFormComponent } from '@amigo/amigo-form-renderer';
 import { CommonModule } from '@angular/common';
@@ -17,18 +17,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class CitizenPortal implements OnInit {
 
-  searchText = '';
-  applications: any[] = [];
-  grievances: any[] = [];
+    searchText = '';
+  applications = signal<any[]> ( []);
+  grievances = signal<any[]> ([]);
+  showAllApplications = false;
+  initialApplicationsCount = 3;
+
+  showAllGrievances = false
+  initialGrievanceCount = 4;
+
 
   CitizenProfileService = inject(CitizenProfileService);
-  citizenportal = signal<any[]>([]);
-
 
   ngOnInit(): void {
     this.loadApplications();
     this.loadGrievances();
-
   }
 
   actions = [
@@ -36,7 +39,7 @@ export class CitizenPortal implements OnInit {
       title: 'Apply for NOC',
       icon: 'bi-file-earmark-text',
       bg: 'bg-blue-500',
-      routerLink: '/apply-noc'
+      routerLink: '/noc-apply'
     },
     {
       title: 'Register Well',
@@ -48,7 +51,7 @@ export class CitizenPortal implements OnInit {
       title: 'Report Violation',
       icon: 'bi-exclamation-triangle',
       bg: 'bg-orange-500',
-      routerLink: '/report-voilation'
+       routerLink: '/report-voilation'
     },
     {
       title: 'Submit Grievance',
@@ -58,21 +61,31 @@ export class CitizenPortal implements OnInit {
     }
   ];
 
-  loadApplications() {
-    this.CitizenProfileService.getMyApplications().subscribe({
-      next: (res: any) => {
-        console.log('application response', res);
+loadApplications() {
+  this.CitizenProfileService.getMyApplications().subscribe({
+    next: (res: any) => {
+      console.log('application response', res);
 
-        this.applications = res.data
+      this.applications.set(res.data);
 
-        console.log('Mapped applications:', this.applications);
-        // this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Failed to load applications', err);
-      }
-    });
-  }
+      console.log('Mapped applications:', this.applications);
+    },
+    error: (err) => {
+      console.error('Failed to load applications', err);
+    }
+  });
+}
+
+visibleApplications() {
+  const list = this.applications();   
+  return this.showAllApplications
+    ? list
+    : list.slice(0, this.initialApplicationsCount);
+}
+toggleViewAll(){
+  this.showAllApplications = !this.showAllApplications
+}
+
   // applications = [
   //   {
   //     title: 'NOC Application',
@@ -130,21 +143,32 @@ export class CitizenPortal implements OnInit {
 
 
   loadGrievances() {
-    this.CitizenProfileService.getGrievances().subscribe({
-      next: (res: any) => {
-        console.log('grievances response', res);
+  this.CitizenProfileService.getGrievances().subscribe({
+    next: (res: any) => {
+      console.log('grievances response', res);
 
-        this.applications = res.data
+      this.grievances.set(res.data);
 
-        console.log('Mapped grievances:', this.grievances);
-        // this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Failed to load grievances', err);
-      }
-    });
-  }
+      console.log('Mapped grievances:', this.grievances);
+    },
+    error: (err) => {
+      console.error('Failed to load grievances', err);
+    }
+  });
+}
 
+visibleGrievances() {
+  const list = this.grievances();   
+  return this.showAllGrievances
+    ? list
+    : list.slice(0, this.initialGrievanceCount);
+}
+
+grievanceViewAll(){
+  this.showAllGrievances = !this.showAllGrievances
+}
+
+  
   documents = [
     {
       name: 'NOC Application Form',
