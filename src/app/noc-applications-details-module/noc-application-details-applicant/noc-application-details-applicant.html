@@ -1,0 +1,91 @@
+<div class="space-y-6bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-5">
+
+        <!-- Contact Information -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+            <div class="px-6 py-4 border-b border-gray-300 text-base font-medium text-gray-900 flex items-center gap-2">
+                Contact Information
+            </div>
+
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                    <div>
+                        <p class="text-gray-500 text-xs flex items-center gap-2">
+                            <i class="bi bi-person text-indigo-500"></i> Name
+                        </p>
+                        <p class="font-medium text-gray-900 mt-1">{{ data.contact.name }}</p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500 text-xs flex items-center gap-2">
+                            <i class="bi bi-briefcase text-indigo-500"></i> Designation
+                        </p>
+                        <p class="font-medium text-gray-900 mt-1">{{ data.contact.designation }}</p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500 text-xs flex items-center gap-2">
+                            <i class="bi bi-building text-indigo-500"></i> Organization
+                        </p>
+                        <p class="font-medium text-gray-900 mt-1">{{ data.contact.organization }}</p>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-500 text-xs flex items-center gap-2">
+                            <i class="bi bi-telephone text-indigo-500"></i> Mobile
+                        </p>
+                        <p class="font-medium text-gray-900 mt-1">{{ data.contact.mobile }}</p>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <p class="text-gray-500 text-xs flex items-center gap-2">
+                            <i class="bi bi-envelope text-indigo-500"></i> Email
+                        </p>
+                        <p class="font-medium text-gray-900 mt-1">{{ data.contact.email }}</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <!-- ROW 2 -->
+    <div class="grid grid-cols-1 gap-6">
+
+        <!-- Business Details -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+            <div class="px-6 py-4 border-b border-gray-300 text-base font-medium text-gray-900 flex items-center gap-2">
+                Business Details
+            </div>
+
+            <div class="px-6 py-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                <div>
+                    <p class="text-gray-500 text-xs">PAN Number</p>
+                    <p class="font-medium text-gray-900 mt-1">{{ data.business.pan }}</p>
+                </div>
+
+                <div>
+                    <p class="text-gray-500 text-xs">GST Number</p>
+                    <p class="font-medium text-gray-900 mt-1">{{ data.business.gst }}</p>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+        <div class="px-6 py-4 border-b border-gray-300 text-base font-medium text-gray-900 flex items-center gap-2">
+            <i class="bi bi-geo-alt text-green-600 text-lg"></i>
+            Address
+        </div>
+
+        <div class="px-6 py-4">
+            <p class="text-gray-900 text-sm break-words">
+                {{ data.contact.address }}
+            </p>
+        </div>
+    </div>
+
+</div>

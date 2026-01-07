@@ -43,4 +43,9 @@ export const routes: Routes = [
   { path: 'enforcement-violations', component: EnforcementViolations },
   { path: 'well-assets', component: WellAssets },
   { path: 'manage-roles', component: RoleManagementPage },
+   {
+    path: 'noc-application',
+    loadChildren: () =>
+      import('./noc-applications-details-module/noc-applications-details.routes').then((m) => m.NocApplicationRoutes),
+  },
 ];
