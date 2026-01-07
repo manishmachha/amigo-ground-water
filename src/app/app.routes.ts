@@ -13,16 +13,27 @@ import { ReportViolation } from './report-violation/report-violation';
 import { SubmitGreviance } from './submit-greviance/submit-greviance';
 import { WellAssets } from './well-assets/well-assets';
 import { WellRegister } from './well-register/well-register';
+import { RoleManagementPage } from './role-management/manage-roles/manage-roles';
 
 export const routes: Routes = [
   { path: '', loadChildren: () => import('./login/login.routes').then((m) => m.loginRoutes) },
   { path: 'posts', component: Posts },
-  { path: 'noc-apply', component: ApplyNoc},
-  { path: 'monitoring-compliances', component: MonitoringCompliance},
-  { path: 'noc-permissions', component: NocPermissions},
-  { path: 'public-home', component: PublicHome},
-  { path: 'rig-management', loadChildren: () => import('./rig-management-module/rig-management.routes').then((m) => m.rigManagementRoutes) },
-  { path: 'tanker-bulk', loadChildren: () => import('./tanker-bulk-supply-module/tanker-bulk-supply.routes').then((m) => m.TankerBulkSupplyRoutes) },
+  { path: 'noc-apply', component: ApplyNoc },
+  { path: 'monitoring-compliances', component: MonitoringCompliance },
+  { path: 'noc-permissions', component: NocPermissions },
+  { path: 'public-home', component: PublicHome },
+  {
+    path: 'rig-management',
+    loadChildren: () =>
+      import('./rig-management-module/rig-management.routes').then((m) => m.rigManagementRoutes),
+  },
+  {
+    path: 'tanker-bulk',
+    loadChildren: () =>
+      import('./tanker-bulk-supply-module/tanker-bulk-supply.routes').then(
+        (m) => m.TankerBulkSupplyRoutes
+      ),
+  },
   { path: 'well-register', component: WellRegister },
   { path: 'citizen-portal', component: CitizenPortal },
   { path: 'report-voilation', component: ReportViolation },
@@ -31,4 +42,5 @@ export const routes: Routes = [
   { path: 'dashboard', component: Dashboard },
   { path: 'enforcement-violations', component: EnforcementViolations },
   { path: 'well-assets', component: WellAssets },
+  { path: 'manage-roles', component: RoleManagementPage },
 ];
