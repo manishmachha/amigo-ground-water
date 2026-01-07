@@ -1,4 +1,5 @@
-// src/app/role-management/role-models.ts
+import { UserDto } from './user.model';
+
 export type PermissionKey = 'view' | 'create' | 'edit' | 'approve' | 'reject' | 'delete';
 
 export interface ModuleConfig {
@@ -9,12 +10,17 @@ export interface ModuleConfig {
 
 export interface Role {
   id: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+  deletedAt: string;
   name: string;
   description: string;
-  badge?: string;
-  accent: 'red' | 'blue' | 'green' | 'yellow' | 'purple';
-  usersAssigned: number;
-  modulePermissions: Record<string, PermissionKey[]>; // moduleId -> selected permissions
+  modulePermissions: Record<string, PermissionKey[]>;
+  badge: string | null;
+  accent: string;
+  users: UserDto[];
 }
 
 export const PERMISSION_LABEL: Record<PermissionKey, string> = {

@@ -67,7 +67,7 @@ import { ModuleConfig, Role } from '../../models/roles.model';
                   <path d="M22 21v-2a4 4 0 00-3-3.87" stroke="currentColor" stroke-width="1.6" />
                   <path d="M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.6" />
                 </svg>
-                <span class="font-medium text-gray-800">{{ role.usersAssigned }}</span>
+                <span class="font-medium text-gray-800">{{ role.users.length }}</span>
                 <span>users assigned</span>
               </div>
             </div>
@@ -81,15 +81,6 @@ import { ModuleConfig, Role } from '../../models/roles.model';
               type="button"
             >
               <i class="bi bi-pencil-square text-[18px] leading-none"></i>
-            </button>
-
-            <button
-              class="icon-btn"
-              (click)="copy.emit(role.id)"
-              title="Duplicate role"
-              type="button"
-            >
-              <i class="bi bi-copy text-[18px] leading-none"></i>
             </button>
 
             <button
@@ -114,7 +105,7 @@ import { ModuleConfig, Role } from '../../models/roles.model';
         <div class="text-xs tracking-wider text-gray-500">ACCESS LEVEL</div>
       </div>
 
-      <!-- ✅ Scrollable area only -->
+      <!--  Scrollable area only -->
       <div class="px-6 pb-6 my-3 flex-1 overflow-auto">
         <div class="space-y-2">
           <div *ngFor="let m of modules" class="flex items-center justify-between gap-4">
@@ -157,7 +148,15 @@ export class RoleCardComponent {
   }
 
   shieldBg(accent: Role['accent']) {
-    return accent === 'red' ? 'bg-red-50' : accent === 'blue' ? 'bg-blue-50' : 'bg-green-50';
+    return accent === 'red'
+      ? 'bg-red-50'
+      : accent === 'blue'
+      ? 'bg-blue-50'
+      : accent === 'yellow'
+      ? 'bg-yellow-50'
+      : accent === 'purple'
+      ? 'bg-purple-50'
+      : 'bg-green-50';
   }
 
   shieldFg(accent: Role['accent']) {
@@ -165,6 +164,10 @@ export class RoleCardComponent {
       ? 'text-red-500'
       : accent === 'blue'
       ? 'text-blue-500'
+      : accent === 'yellow'
+      ? 'text-yellow-500'
+      : accent === 'purple'
+      ? 'text-purple-500'
       : 'text-green-600';
   }
 
