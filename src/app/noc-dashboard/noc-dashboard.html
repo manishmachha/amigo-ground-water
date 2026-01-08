@@ -1,0 +1,203 @@
+<div class="min-h-screen bg-gray-50 p-6 space-y-6">
+
+  <!-- ================= HEADER ================= -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-medium text-gray-900">Dashboard</h1>
+      <p class="text-sm text-gray-500">
+        Welcome back, here's what's happening today
+      </p>
+    </div>
+
+    <button
+      class="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl shadow hover:shadow-lg transition">
+      <i class="bi bi-file-earmark-text text-lg"></i>
+      New Application
+    </button>
+  </div>
+
+
+  <!-- ================= STATS CARDS ================= -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+    <div *ngFor="let c of statCards()"
+      class="bg-white rounded-2xl border border-gray-200 shadow p-5 flex flex-col items-center justify-center">
+
+      <i class="bi {{ c.icon }} text-xl mb-2"></i>
+
+      <div class="text-xs font-medium text-gray-600 uppercase">
+        {{ c.title }}
+      </div>
+
+      <div class="text-xl font-medium text-gray-900">
+        {{ c.value }}
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= CATEGORY + DISTRICT ================= -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- ===== Applications by Category ===== -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow p-5 space-y-4">
+
+      <h3 class="text-base font-medium text-gray-900">
+        Applications by Category
+      </h3>
+
+      <div *ngFor="let c of categories()" class="space-y-1">
+
+        <div class="flex items-center justify-between text-sm font-medium">
+          <span>{{ c.name }}</span>
+
+          <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs">
+            {{ c.count }}
+          </span>
+        </div>
+
+        <div class="bg-slate-200 h-1.5 rounded-full">
+          <div class="bg-black h-1.5 rounded-full" [style.width.%]="(c.count / maxCategoryCount()) * 100">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ===== District-wise NOC Summary ===== -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow p-5">
+
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="text-lg font-medium text-gray-900">
+            District-wise NOC Summary
+          </h3>
+          <p class="text-sm text-gray-500">
+            NOCs by district and risk category
+          </p>
+        </div>
+
+        <i class="bi bi-droplet text-xl text-gray-400"></i>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+
+          <thead class="bg-gray-100 border-b border-gray-200">
+            <tr>
+              <th class="text-left px-4 py-3 font-medium text-gray-700">
+                District
+              </th>
+              <th class="text-right px-4 py-3 font-medium text-gray-700">
+                Total NOCs
+              </th>
+              <th class="text-right px-4 py-3 font-medium text-gray-700">
+                In Critical/OE
+              </th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-gray-100">
+
+            <tr *ngFor="let d of districtSummary()">
+
+              <td class="px-4 py-3 font-medium text-gray-900">
+                {{ d.district }}
+              </td>
+
+              <td class="text-right px-4 py-3 text-gray-800">
+                {{ d.totalNocs }}
+              </td>
+
+              <td class="text-right px-4 py-3">
+                <span
+                  class="inline-flex items-center justify-center bg-slate-200 text-gray-900 text-xs font-medium rounded-full px-3 py-1">
+                  0
+                </span>
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= QUICK ACTIONS ================= -->
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm">
+
+    <div class="px-6 py-5 border-b border-gray-200">
+      <h3 class="text-lg font-medium text-gray-900">Quick Actions</h3>
+      <p class="text-sm text-gray-500 mt-1">
+        Common tasks and workflows
+      </p>
+    </div>
+
+    <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-5">
+
+      <!-- View All -->
+      <div routerLink="/noc-applications"
+        class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow transition cursor-pointer">
+
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
+          <i class="bi bi-file-earmark text-2xl text-blue-600"></i>
+        </div>
+
+        <div class="text-base font-medium text-gray-900">
+          View All Applications
+        </div>
+
+        <div class="text-sm text-gray-500 mt-1">
+          Browse and manage NOC applications
+        </div>
+
+      </div>
+
+      <!-- Apply -->
+      <div class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow transition cursor-pointer">
+
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
+          <i class="bi bi-graph-up text-2xl text-blue-600"></i>
+        </div>
+
+        <div class="text-base font-medium text-gray-900">
+          Apply for New NOC
+        </div>
+
+        <div class="text-sm text-gray-500 mt-1">
+          Submit a new NOC application
+        </div>
+
+      </div>
+
+      <!-- Renewals -->
+      <div class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow transition cursor-pointer">
+
+        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
+          <i class="bi bi-clock text-2xl text-blue-600"></i>
+        </div>
+
+        <div class="text-base font-medium text-gray-900">
+          NOC Renewals
+        </div>
+
+        <div class="text-sm text-gray-500 mt-1">
+          Manage upcoming renewals
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

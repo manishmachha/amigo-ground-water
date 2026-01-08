@@ -14,6 +14,9 @@ import { SubmitGreviance } from './submit-greviance/submit-greviance';
 import { WellAssets } from './well-assets/well-assets';
 import { WellRegister } from './well-register/well-register';
 import { RoleManagementPage } from './role-management/manage-roles/manage-roles';
+import { DistrictOfficer } from './district-officer/district-officer';
+import { NocApplications } from './noc-applications/noc-applications';
+import { NocDashboard } from './noc-dashboard/noc-dashboard';
 
 export const routes: Routes = [
   { path: '', loadChildren: () => import('./login/login.routes').then((m) => m.loginRoutes) },
@@ -43,6 +46,9 @@ export const routes: Routes = [
   { path: 'enforcement-violations', component: EnforcementViolations },
   { path: 'well-assets', component: WellAssets },
   { path: 'manage-roles', component: RoleManagementPage },
+  {path:'district-officer', component: DistrictOfficer},
+  {path:'noc-applications', component:NocApplications},
+  {path:'noc-dashboard', component:NocDashboard},
    {
     path: 'noc-application',
     loadChildren: () =>
