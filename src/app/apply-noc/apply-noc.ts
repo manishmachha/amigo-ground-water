@@ -36,7 +36,7 @@ export class ApplyNoc {
 
       // Navigate AFTER snackbar shows
       setTimeout(() => {
-        this.router.navigate(['/citizen-portal']);
+        this.router.navigate(['/noc-applications']);
       }, 3000);
     }
   }

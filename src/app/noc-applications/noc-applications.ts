@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatCard, MatCardModule } from '@angular/material/card';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-noc-applications',
@@ -29,16 +30,14 @@ import { MatCard, MatCardModule } from '@angular/material/card';
     FormsModule,
     MatSelectModule,
     MatOptionModule,
-    MatCardModule,
-
-
-  ],
+    MatCardModule, RouterLink],
   templateUrl: './noc-applications.html',
   styleUrl: './noc-applications.css',
 })
 export class NocApplications implements OnInit {
 
   nocService = inject(NocService);
+  nocApplication = signal<any[]>([]);
 
   displayedColumns = signal<string[]>([
     'appId',
@@ -62,12 +61,7 @@ export class NocApplications implements OnInit {
 
 
   ngOnInit(): void {
-    this.nocService.fetchNocs();
-
-    /** signal effect – standalone inplace update */
-    setInterval(() => {
-      this.dataSource.data = this.nocService.nocs();
-    }, 200);
+   this.loadApplicantData();
   }
 
   ngAfterViewInit() {
@@ -75,7 +69,21 @@ export class NocApplications implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  isLoading(): boolean {
-    return this.nocService.loading();
-  }
+  loadApplicantData() {
+  this.nocService.getNocApplications().subscribe({
+    next: (res: any) => {
+      console.log('API response:', res);
+
+      // ✅ THIS IS THE KEY LINE
+      this.dataSource.data = res.data;
+
+      // optional signal (if you need elsewhere)
+      this.nocApplication.set(res.data);
+    },
+    error: (err) => {
+      console.error('Failed to load applications', err);
+    }
+  });
+}
+
 }

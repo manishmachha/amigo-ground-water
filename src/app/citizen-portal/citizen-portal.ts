@@ -20,18 +20,24 @@ export class CitizenPortal implements OnInit {
     searchText = '';
   applications = signal<any[]> ( []);
   grievances = signal<any[]> ([]);
+  document = signal<any[]> ([]);
   showAllApplications = false;
   initialApplicationsCount = 3;
 
   showAllGrievances = false
   initialGrievanceCount = 4;
 
+  showAllDocuments = false;
+  initialDocumentsCount = 3;
 
-  CitizenProfileService = inject(CitizenProfileService);
+
+
+  CitizenPortaleService = inject(CitizenProfileService);
 
   ngOnInit(): void {
     this.loadApplications();
     this.loadGrievances();
+    this.loadDocuments();
   }
 
   actions = [
@@ -62,7 +68,7 @@ export class CitizenPortal implements OnInit {
   ];
 
 loadApplications() {
-  this.CitizenProfileService.getMyApplications().subscribe({
+  this.CitizenPortaleService.getMyApplications().subscribe({
     next: (res: any) => {
       console.log('application response', res);
 
@@ -143,7 +149,7 @@ toggleViewAll(){
 
 
   loadGrievances() {
-  this.CitizenProfileService.getGrievances().subscribe({
+  this.CitizenPortaleService.getGrievances().subscribe({
     next: (res: any) => {
       console.log('grievances response', res);
 
@@ -183,6 +189,31 @@ grievanceViewAll(){
       date: 'Uploaded · 14/1/2024'
     }
   ];
+
+  loadDocuments(){
+    this.CitizenPortaleService.getDocuments().subscribe({
+      next: (res: any) =>{
+        // console.log('Document Response', res);
+        this.document.set(res.data);
+        console.log('Documents Res', this.document());
+
+      },
+       error: (err) => {
+      console.error('Failed to load Documents', err);
+    }
+    })
+  }
+
+  visibleDocuments() {
+  const list = this.document();   
+  return this.showAllDocuments
+    ? list
+    : list.slice(0, this.initialDocumentsCount);
+}
+
+documentViewAll(){
+  this.showAllDocuments = !this.showAllDocuments
+}
 
 
 }

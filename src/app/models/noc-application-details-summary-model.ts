@@ -15,11 +15,15 @@ export interface NocScreenData {
   assessmentCategory: string;
   watershed: string;
 
+
+  freshWaterDaily?: number;
+  freshWaterAnnual?: number;
 }
 export interface GroundwaterRequirement {
   type: string;
-  daily: number;
-  annual: number;
+  
+  freshWaterDaily?: number;
+  freshWaterAnnual?: number;
 }
 
 export interface Structure {

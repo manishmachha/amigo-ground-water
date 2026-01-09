@@ -19,6 +19,10 @@ getGrievances(){
   return this.http.get(`${this.baseurl}/grievances`);
 }
 
+getDocuments(){
+  return this.http.get(`${this.baseurl}/documents`)
+}
+
 
   personalInfo(){
     return this.http.get(`${this.baseurl}/users/profile`)

@@ -1,8 +1,8 @@
 <!-- MAIN GRID -->
-<div class="space-y-6 p-4 sm:p-6 lg:p-8">
+<div class="space-y-6 p-4 sm:p-6 lg:p-8" *ngFor="let applicant of applicantSummary()">
 
   <!-- ROW 1 -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6" *ngFor="let applicant of applicantSummary()">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
     <!-- Project Information -->
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
@@ -76,7 +76,10 @@
 
         <div class="flex flex-col sm:flex-row sm:justify-between gap-1">
           <span class="text-gray-500">Assessment Category:</span>
-          <span class="inline-flex border bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs">
+          <span class="inline-flex border bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs"
+          [ngClass]="{
+            'bg-green-300 text-green-700': applicant.assessmentCategory === 'SAFE',
+          }">
             {{ applicant.assessmentCategory}}
           </span>
         </div>
@@ -111,10 +114,28 @@
         <tbody>
           <tr class="border border-gray-300" *ngFor="let row of groundwaterRequirement">
             <td class="p-3 font-medium">{{ row.type }}</td>
-            <td class="p-3 text-right">{{ row.daily }}</td>
-            <td class="p-3 text-right">{{ row.annual | number }}</td>
+
+            <!-- Daily -->
+            <td class="p-3 text-right">
+              {{
+              row.type === 'Fresh Groundwater'
+              ? applicant?.freshWaterDaily
+              : row.freshWaterDaily
+              }}
+            </td>
+
+            <!-- Annual -->
+            <td class="p-3 text-right">
+              {{
+              row.type === 'Fresh Groundwater'
+              ? applicant?.freshWaterAnnual
+              : row.freshWaterAnnual
+              }}
+            </td>
           </tr>
         </tbody>
+
+
       </table>
     </div>
   </div>

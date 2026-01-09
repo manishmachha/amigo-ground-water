@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { signal } from '@angular/core';
 import { NocApplicationDetailsService } from '../../services/noc-application-details-service';
+import { ActivatedRoute } from '@angular/router';
 
 export interface TimelineEvent {
   action?: string;
@@ -24,11 +25,18 @@ export class NocApplicationDetailsTimeline implements OnInit {
   applicantTimeline = inject(NocApplicationDetailsService);
 
   timelineData = signal<TimelineEvent[]>([]);
+  route = inject(ActivatedRoute);
 
 
   ngOnInit(): void {
-    this.loadTimeline();
+  const id = this.route.parent?.snapshot.paramMap.get('id');
+  console.log('Clicked Application ID:', id);
+
+  if (id) {
+    this.loadTimeline(id);
   }
+}
+
 
   constructor() {
     this.loadSampleData();
@@ -98,10 +106,10 @@ export class NocApplicationDetailsTimeline implements OnInit {
     this.timelineData.set(data);
   }
 
-   loadTimeline() {
-    const applicantId = '6e60aebc-ae10-4452-a599-e211ab54da2b';
+   loadTimeline(id: string) {
+    // const applicantId = '6e60aebc-ae10-4452-a599-e211ab54da2b';
 
-    this.applicantTimeline.nocApplicationDetailsTimeline(applicantId).subscribe({
+    this.applicantTimeline.nocApplicationDetailsTimeline(id).subscribe({
       next: (res: any) => {
 
         const timeline: TimelineEvent[] = res.data.timeline.map(

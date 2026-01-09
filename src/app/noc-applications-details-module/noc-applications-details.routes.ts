@@ -13,7 +13,7 @@ import { NocApplicationDetailsTimeline } from "./noc-application-details-timelin
 
 export const NocApplicationRoutes: Routes = [
 
-  { path: '', component: NocApplicationDetails,
+  { path: ':id', component: NocApplicationDetails,
     children:[
   { path: '', redirectTo: 'summary', pathMatch: 'full' },
   { path: 'summary', component: NocApplicationDetailsSummary },
@@ -28,3 +28,4 @@ export const NocApplicationRoutes: Routes = [
   },
 
  ];
+

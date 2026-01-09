@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ApplicantInfo } from '../../models/noc-application-details-applicant-model';
 import { NocApplicationDetailsService } from '../../services/noc-application-details-service';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-noc-application-details-applicant',
@@ -12,17 +13,24 @@ import { CommonModule } from '@angular/common';
 export class NocApplicationDetailsApplicant implements OnInit {
 
   applicantInfo = signal<ApplicantInfo []>([]);
+  route = inject(ActivatedRoute);
 
   nocApplicantInfo = inject(NocApplicationDetailsService);
 
   ngOnInit(): void {
-    this.loadApplicantInfo();
+  const id = this.route.parent?.snapshot.paramMap.get('id');
+  console.log('Clicked Application ID:', id);
+
+  if (id) {
+    this.loadApplicantInfo(id);
   }
+}
 
-  loadApplicantInfo() {
-    const applicantId = '6e60aebc-ae10-4452-a599-e211ab54da2b';
 
-    this.nocApplicantInfo.nocApplicantDetails(applicantId).subscribe({
+  loadApplicantInfo(id: string) {
+    // const applicantId = '6e60aebc-ae10-4452-a599-e211ab54da2b';
+
+    this.nocApplicantInfo.nocApplicantDetails(id).subscribe({
       next: (res: any) => {
         console.log('API response', res);
         this.applicantInfo.set([res.data.applicant]); 
