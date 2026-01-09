@@ -1,0 +1,77 @@
+<div class="space-y-6 bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-5"
+    *ngFor="let applicant of applicantInfo()">
+
+    <!-- Contact Information -->
+    <div class="px-6 py-6 bg-white rounded-xl border border-gray-200 shadow-xl">
+        <div class="px-6 py-4 border-b border-gray-300 text-xl font-medium text-gray-900">
+            Contact Information
+        </div>
+
+        <div class="px-6 py-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <div>
+                <p class="text-gray-500 text-sm">Name</p>
+                <p class="font-medium text-gray-900">{{ applicant.fullName }}</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500 text-sm">Designation</p>
+                <p class="font-medium text-gray-900 ml-5">{{ applicant.designation }} ----</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500 text-sm">Organization</p>
+                <p class="font-medium text-gray-900 ml-5">{{ applicant.organization }} ----</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500 text-sm">Mobile</p>
+                <p class="font-medium text-gray-900">{{ applicant.mobileNumber }}</p>
+            </div>
+
+            <div class="md:col-span-2">
+                <p class="text-gray-500 text-sm">Email</p>
+                <p class="font-medium text-gray-900">{{ applicant.email }}</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Business Details -->
+    <div class="px-6 py-6 bg-white rounded-xl border border-gray-200 shadow-xl">
+        <div class="px-6 py-4 border-b border-gray-300 text-xl font-medium text-gray-900">
+            Business Details
+        </div>
+
+        <div class="px-6 py-4 grid grid-cols-2 gap-4">
+            <div>
+                <p class="text-gray-500 text-sm">{{ applicant.idProofType }}</p>
+                <p class="font-medium text-gray-900">{{ applicant.idProofNumber }}</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500 text-sm">GST Number</p>
+                <p class="font-medium text-gray-900 ml-5">{{ applicant.gstNumber }} ----</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Address -->
+    <div class="px-6py6
+     bg-white rounded-xl border border-gray-200 shadow-xl">
+        <div class="px-6 py-4 text-xl border-b border-gray-300 font-medium">
+            Address
+        </div>
+
+        <div class="px-6 py-4 text-sm">
+            {{ applicant.doorNumber }},
+            {{ applicant.street }},
+            {{ applicant.village }},
+            {{ applicant.mandal }},
+            {{ applicant.district }} -
+            {{ applicant.pinCode }}
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,106 @@
+<div class="space-y-6">
+
+  <!-- Alert Card -->
+  <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm">
+    <div class="flex items-start gap-2">
+      <i class="bi bi-exclamation-triangle text-base flex-shrink-0"></i>
+
+      <div class="min-w-0">
+        <p class="text-gray-900 break-words">
+          Power Feasibility NOC is pending. All other documents have been verified.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+
+    <div class="overflow-x-auto">
+      <table mat-table [dataSource]="dataSource" matSort class="w-full text-sm">
+
+        <!-- Document Name -->
+        <ng-container matColumnDef="documentName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Document Name</th>
+          <td mat-cell *matCellDef="let row" class="font-medium">
+            {{ row.documentName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status" class="border border-gray-200">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let row">
+            <span
+              class="inline-flex items-center justify-center rounded-full border border-gray-200 px-2 py-0.5 text-xs font-medium whitespace-nowrap"
+              [ngClass]="getStatusClass(row.status)">
+              {{ row.status === 'VERIFIED' ? 'Verified'
+              : row.status === 'PENDING' ? 'Pending Verification'
+              : 'Not Uploaded' }}
+            </span>
+          </td>
+        </ng-container>
+
+
+        <!-- Upload Date -->
+        <ng-container matColumnDef="uploadDate">
+          <th mat-header-cell *matHeaderCellDef>Upload Date</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.uploadDate || '-' }}
+          </td>
+        </ng-container>
+
+        <!-- Size -->
+        <ng-container matColumnDef="size">
+          <th mat-header-cell *matHeaderCellDef>Size</th>
+          <td mat-cell *matCellDef="let row" class="text-right">
+            {{ row.size || '-' }}
+          </td>
+        </ng-container>
+
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
+          <td mat-cell *matCellDef="let row" class="text-center">
+            <div class="flex items-center justify-center gap-2">
+              <button class="h-8 w-8 rounded-md border border-gray-200 hover:bg-gray-100" (click)="onPreview(row)">
+                <i class="bi bi-eye text-blue-600"></i>
+              </button>
+
+              <button class="h-8 w-8 rounded-md border border-gray-200 hover:bg-gray-100" (click)="onDownload(row)">
+                <i class="bi bi-download text-gray-700"></i>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="px-4 py-3">
+      <mat-paginator [pageSizeOptions]="[5,10,20]" class="rounded-md">
+      </mat-paginator>
+    </div>
+
+  </div>
+
+  <!-- Bottom Buttons -->
+  <div class="flex flex-wrap justify-end gap-2 sm:gap-3 px-4 py-4 border-t border-gray-200 bg-white">
+
+    <button class="flex items-center gap-2 px-4 py-2 rounded-md border border-gray-200 hover:bg-gray-50 text-sm">
+      <i class="bi bi-chat-left-text"></i>
+      Request Additional Documents
+    </button>
+
+    <button
+      class="flex items-center gap-2 px-4 py-2 rounded-md bg-green-600 hover:bg-green-700 text-white text-sm min-w-[140px]">
+      <i class="bi bi-check-circle"></i>
+      Mark All Verified
+    </button>
+
+  </div>
+
+</div>

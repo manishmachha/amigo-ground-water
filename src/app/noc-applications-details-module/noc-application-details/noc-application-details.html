@@ -1,0 +1,204 @@
+<!-- TOP BAR -->
+<div>
+    <div class="bg-white/80 backdrop-blur-xl border-b border-gray-200 sticky top-0 z-40">
+        <div class="px-4 sm:px-6 lg:px-8 py-5">
+
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+                <!-- LEFT SECTION -->
+                <div class="flex items-start gap-3 sm:gap-4 min-w-0">
+
+                    <!-- Back Button -->
+                    <button routerLink="/noc-applications"
+                    class="hover:bg-gray-100 px-3 py-2 rounded-md flex-shrink-0">
+                        <i class="bi bi-arrow-left text-xl"></i>
+                    </button>
+
+                    <!-- TEXT INFO -->
+                    <div class="min-w-0 flex-1" *ngFor="let data of applicantData()">
+
+                        <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                            <h1 class="text-xl sm:text-2xl font-medium text-gray-900 truncate sm:whitespace-normal">
+                                {{data.projectName }}
+                            </h1>
+
+                            <span
+                                class="bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full text-xs whitespace-nowrap flex-shrink-0">
+                                {{ data.projectCategory}}
+                            </span>
+                        </div>
+
+                        <p class="text-xs sm:text-sm text-gray-500 mt-1">
+                            Application ID: {{ data.applicationNumber }}
+                            <span class="hidden sm:inline">•</span>
+                            <span class="block sm:inline"> Submitted on {{ data.createdAt | date:'dd/MM/yyyy' }}</span>
+                        </p>
+
+                    </div>
+                </div>
+
+                <!-- RIGHT SECTION / ACTION BUTTONS -->
+                <div class="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 lg:justify-end">
+
+                    <!-- Export PDF -->
+                    <button
+                        class="border border-gray-300 hover:bg-gray-50 px-3 sm:px-4 py-2 rounded-md text-sm flex items-center justify-center gap-2">
+                        <i class="bi bi-download"></i>
+                        <span>Export PDF</span>
+                    </button>
+
+                    <!-- Take Action -->
+                    <button
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-5 py-2 rounded-md text-sm flex items-center justify-center gap-2 min-w-[120px]"
+                        (click)="takeAction()">
+                        <i class="bi bi-send"></i>
+                        <span>Take Action</span>
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- CARDS -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6 p-8" *ngFor="let data of applicantData()">
+
+        <!-- Officer -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-3">
+            <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                <i class="bi bi-person text-blue-600 text-xl"></i>
+            </div>
+
+            <div>
+                <p class="text-xs text-gray-500">Assigned Officer</p>
+                <p class="text-sm font-medium text-gray-900">
+                    {{ data?.assignedTo?.fullName || '-' }}
+                </p>
+                <p class="text-xs text-gray-500">
+                    {{ data?.assignedTo?.role?.name }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Stage -->
+        <div class="bg-white rounded-xl shadow-sm p-5 flex gap-3">
+            <div class="w-10 h-10 bg-yellow-50 rounded-lg flex items-center justify-center">
+                <i class="bi bi-activity text-yellow-600 text-xl"></i>
+            </div>
+
+            <div>
+                <p class="text-xs">Current Stage</p>
+
+                <p class="text-sm font-medium">
+                    {{ data.currentStage }}
+                </p>
+
+                <p class="text-xs text-gray-500">
+                    {{ data.status }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Assessment -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-3">
+            <div class="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center">
+                <i class="bi bi-geo-alt text-purple-600 text-xl"></i>
+            </div>
+
+            <div>
+                <p class="text-xs">Assessment Category</p>
+                <p class="text-sm font-medium text-orange-600">
+                    {{ application.category }}
+                </p>
+                <p class="text-xs text-gray-500">
+                    {{ data.district }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Requirement -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex gap-3">
+            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
+                <i class="bi bi-droplet text-green-600 text-xl"></i>
+            </div>
+
+            <div>
+                <p class="text-xs">Daily Requirement</p>
+                <p class="text-sm font-medium text-gray-900">
+                    {{ data.freshWaterDaily }} m³
+                </p>
+                <p class="text-xs text-gray-500">
+                    {{ data.freshWaterAnnual }}m³/year
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div>
+
+    <!-- ACTION BUTTONS FOR ALL 8 TABS -->
+    <div class="mb-10 px-2 py-1 grid grid-cols-1 lg:grid-cols-8 gap-4 bg-gray-100 rounded-2xl">
+
+        <!-- Summary -->
+        <button routerLink="summary" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md  text-gray-700">
+            <i class="bi bi-file-text text-lg"></i>
+            <span>Summary</span>
+        </button>
+
+        <!-- Applicant -->
+        <button routerLink="applicant" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700">
+            <i class="bi bi-person text-lg"></i>
+            <span>Applicant</span>
+        </button>
+
+        <!-- Documents -->
+        <button routerLink="documents" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700">
+            <i class="bi bi-upload text-lg"></i>
+            <span>Documents</span>
+        </button>
+
+        <!-- Technical Review -->
+        <button routerLink="technical-review" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700">
+            <i class="bi bi-gear text-lg"></i>
+            <span>Technical Review</span>
+        </button>
+
+        <!-- Field Investigation -->
+        <button routerLink="field-investigation" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700">
+            <i class="bi bi-geo-alt text-lg"></i>
+            <span>Field Investigation</span>
+        </button>
+
+        <!-- Charges -->
+        <button routerLink="charges" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700">
+            <i class="bi bi-currency-dollar text-lg"></i>
+            <span>Charges</span>
+        </button>
+
+        <!-- Approval -->
+        <button routerLink="approval" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700">
+            <i class="bi bi-file-check text-lg"></i>
+            <span>Approval</span>
+        </button>
+
+        <!-- Timeline -->
+        <button routerLink="timeline" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700">
+            <i class="bi bi-clock text-lg"></i>
+            <span>Timeline</span>
+        </button>
+
+    </div>
+    <router-outlet></router-outlet>
+</div>
