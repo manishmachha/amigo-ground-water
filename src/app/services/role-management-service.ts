@@ -3,16 +3,17 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ModuleConfig, Role } from '../models/roles.model';
+import { environmentUrls } from '../environment.urls';
 
 @Injectable({ providedIn: 'root' })
 export class RoleApiService {
   private http = inject(HttpClient);
 
   // change this to your backend base url
-  private baseUrl = '/api';
+  private baseUrl = environmentUrls.development.apiUrl;
 
   getModules(): Observable<ModuleConfig[]> {
-    return this.http.get<ModuleConfig[]>(`${this.baseUrl}/modules`);
+    return this.http.get<ModuleConfig[]>(`${this.baseUrl}/roles/modules`);
   }
 
   getRoles(): Observable<Role[]> {

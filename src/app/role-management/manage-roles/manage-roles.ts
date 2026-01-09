@@ -5,6 +5,7 @@ import { RoleCardComponent } from './roles-card';
 import { RoleDetailsPanelComponent } from './edit-role-details-panel';
 import { CreateRoleDialogComponent } from './create-role-dialog';
 import { RoleManagementStore } from '../role-management-store';
+import { PermissionKey } from '../../models/roles.model';
 
 @Component({
   selector: 'app-role-management',
@@ -46,7 +47,6 @@ import { RoleManagementStore } from '../role-management-store';
             [modules]="store.modules()"
             [selected]="store.activeRoleId() === role.id"
             (edit)="onEdit($event)"
-            (copy)="onCopy($event)"
             (remove)="onDelete($event)"
             (click)="store.selectRole(role.id)"
           />
@@ -60,10 +60,7 @@ import { RoleManagementStore } from '../role-management-store';
           [role]="detailsRole"
           [modules]="store.modules()"
           (close)="store.closeDetails()"
-          (toggleModule)="store.toggleModule(detailsRole.id, $event.moduleId, $event.enabled)"
-          (togglePermission)="
-            store.togglePermission(detailsRole.id, $event.moduleId, $event.permission)
-          "
+          (apply)="onApplyRolePermissions($event)"
         />
 
         <!-- Create dialog (screen 2) -->
@@ -96,14 +93,14 @@ export class RoleManagementPage {
     });
   }
 
+  ngOnInit() {
+    this.store.init();
+  }
+
   trackById = (_: number, r: { id: string }) => r.id;
 
   onEdit(roleId: string) {
     this.store.openDetails(roleId);
-  }
-
-  onCopy(roleId: string) {
-    this.store.duplicateRole(roleId);
   }
 
   onDelete(roleId: string) {
@@ -115,5 +112,13 @@ export class RoleManagementPage {
   onCreate(payload: { name: string; description: string; modulePermissions: any }) {
     this.store.createRole(payload);
     this.store.closeCreateDialog();
+  }
+
+  onApplyRolePermissions(e: {
+    roleId: string;
+    modulePermissions: Record<string, PermissionKey[]>;
+  }) {
+    // one API call / one store update
+    this.store.updateRolePermissions(e.roleId, e.modulePermissions);
   }
 }

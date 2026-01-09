@@ -40,7 +40,7 @@ export class Login {
 
   ngOnInit() {
     setTimeout(() => {
-      this.status = 'updated ✅';
+      this.status = 'updated ';
     }, 1000);
   }
 }

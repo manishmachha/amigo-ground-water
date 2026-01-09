@@ -41,65 +41,13 @@ export class AccessControlService {
     // For now, hardcode user with roleIds or set from login response.
     // this.me.set({ id: 'u1', name: 'Manish', roleIds: ['r_district_officer'] });
 
-    // this.roleApi.getRoles().subscribe({
-    //   next: (roles) => {
-    //     console.log('[ACL] Roles loaded:', roles.length);
-    //     this.roles.set(roles);
-    //   },
-    //   error: (e) => console.error('[ACL] Failed to load roles', e),
-    // });
-    this.roles.set([
-      {
-        id: 'r_sys_admin',
-        name: 'System Administrator',
-        badge: 'System',
-        description: 'Full system access with all permissions',
-        accent: 'red',
-        usersAssigned: 3,
-        modulePermissions: {
-          noc: ['view', 'create', 'edit', 'approve', 'reject', 'delete'],
-          wells: ['view', 'create', 'edit', 'delete'],
-          monitor: ['view', 'create', 'edit', 'delete'],
-          billing: ['view', 'create', 'edit', 'approve', 'delete'],
-          enforce: ['view', 'create', 'edit', 'approve', 'delete'],
-          griev: ['view', 'create', 'edit', 'approve', 'delete'],
-          reports: ['view', 'create', 'edit', 'delete'],
-          admin: ['view', 'create', 'edit', 'delete'],
-        },
+    this.roleApi.getRoles().subscribe({
+      next: (roles:any) => {
+        console.log('[ACL] Roles loaded:', roles.data.length);
+        this.roles.set(roles.data);
       },
-      {
-        id: 'r_district_officer',
-        name: 'District Officer',
-        description: 'District-level operations and approvals',
-        accent: 'blue',
-        usersAssigned: 33,
-        modulePermissions: {
-          noc: ['view', 'create', 'edit', 'approve', 'reject'], // 5
-          wells: ['view', 'edit', 'delete'], // 3
-          monitor: ['view', 'edit', 'delete'], // 3
-          billing: ['view', 'edit', 'approve'], // 3
-          enforce: ['view', 'edit', 'approve', 'delete'], // 4
-          griev: ['view', 'edit', 'approve'], // 3
-          reports: ['view', 'edit', 'delete'], // 3
-        },
-      },
-      {
-        id: 'r_billing_officer',
-        name: 'Billing Officer',
-        description: 'Billing and revenue operations',
-        accent: 'green',
-        usersAssigned: 28,
-        modulePermissions: {
-          noc: ['view'], // 1
-          wells: ['view'], // 1
-          monitor: ['view'], // 1
-          billing: ['view', 'create', 'edit', 'delete'], // 4
-          enforce: ['view'], // 1
-          griev: ['view'], // 1
-          reports: ['view', 'edit', 'delete'], // 3
-        },
-      },
-    ]);
+      error: (e) => console.error('[ACL] Failed to load roles', e),
+    });
   }
 
   can(moduleId: string, permission: PermissionKey): boolean {
