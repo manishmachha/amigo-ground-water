@@ -12,15 +12,8 @@
                     <div class="flex flex-col items-center relative">
 
                         <!-- ICON CIRCLE -->
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center border-2 bg-white z-10"
-                            [ngClass]="{ '!bg-green-100 border-green-500 text-green-700': timeline.toPhase === 'SUBMITTED', '!bg-green-50 border-green-300 text-green-600': timeline.toPhase === 'APPLICATION_DRAFT', '!bg-blue-50 border-blue-400 text-blue-700': timeline.toPhase === 'ONBOARDING', 
-                            '!bg-gray-100 border-gray-300 text-gray-500': timeline.toPhase === 'PAYMENT_PENDING' }">
-                            <i class="bi text-2xl" [ngClass]="{
-        'bi-check2-circle': timeline.toPhase === 'SUBMITTED',
-        'bi-gear': timeline.toPhase === 'APPLICATION_DRAFT',
-        'bi-person-check': timeline.toPhase === 'ONBOARDING',
-        'bi-hourglass-split': timeline.toPhase === 'PAYMENT_PENDING'
-      }"></i>
+                        <div class="w-10 h-10 rounded-full flex items-center bg-green-300 justify-center z-10" >
+                            <i class="bi bi-check2-circle text-2xl"></i>
                         </div>
 
                         <!-- VERTICAL LINE (touches border) -->

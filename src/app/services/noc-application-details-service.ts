@@ -17,5 +17,9 @@ export class NocApplicationDetailsService {
   nocApplicationDetailsTimeline(id: string){
     return this.http.get(`${this.baseUrl}/timeline/${id}`)
   }
+
+  submitNocApplication(id: string){
+    return this.http.patch(`${this.baseUrl}/${id}/submit`,{});
+  }
   
 }
