@@ -17,6 +17,7 @@ import { RoleManagementPage } from './role-management/manage-roles/manage-roles'
 import { DistrictOfficer } from './district-officer/district-officer';
 import { NocApplications } from './noc-applications/noc-applications';
 import { NocDashboard } from './noc-dashboard/noc-dashboard';
+import { RigOwnerDashboard } from './rig-owner-dashboard/rig-owner-dashboard';
 
 export const routes: Routes = [
   { path: '', loadChildren: () => import('./login/login.routes').then((m) => m.loginRoutes) },
@@ -54,4 +55,5 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./noc-applications-details-module/noc-applications-details.routes').then((m) => m.NocApplicationRoutes),
   },
+  {path :'rig-owner', component: RigOwnerDashboard},
 ];

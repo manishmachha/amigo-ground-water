@@ -2,6 +2,7 @@ import { AmigoFormComponent } from '@amigo/amigo-form-renderer';
 import { Component, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NocApplicationDetailsService } from '../services/noc-application-details-service';
 
 @Component({
   selector: 'app-apply-noc',
@@ -13,7 +14,8 @@ import { Router } from '@angular/router';
 export class ApplyNoc {
 
   router = inject(Router);
-  snackBar = inject(MatSnackBar)
+  snackBar = inject(MatSnackBar);
+  submitNocApplications = inject(NocApplicationDetailsService);
 
   formId = '95d9dcf4-9e6b-4349-a8f6-2cfeaf5470c7';
 
@@ -22,23 +24,53 @@ export class ApplyNoc {
 
     if (event?.response?.success) {
 
-      // Show SnackBar
-      this.snackBar.open(
-        'NOC Form submitted successfully',
-        'Close',
-        {
-          duration: 3000,          // 3 seconds
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar']
-        }
-      );
+      const applicationId = event?.response?.data?.applicantId;
 
-      // Navigate AFTER snackbar shows
-      setTimeout(() => {
-        this.router.navigate(['/noc-applications']);
-      }, 3000);
+      if (!applicationId) {
+        console.log('Application Id Not Generated');
+        return;
+      }
+
+      console.log('Application Id:', applicationId);
+
+      this.submitNoc(applicationId);
     }
+  }
+
+  submitNoc(applicantId: string) {
+
+    this.submitNocApplications.submitNocApplication(applicantId).subscribe({
+      next: () => {
+        //  STEP 4: Show snackbar
+        this.snackBar.open(
+          'NOC Form submitted successfully',
+          'Close',
+          {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          }
+        );
+
+        // STEP 5: Navigate after snackbar
+        setTimeout(() => {
+          this.router.navigate(['/noc-applications']);
+        }, 3000);
+      },
+      error: (err) => {
+        console.error('Second API failed', err);
+
+        this.snackBar.open(
+          'Failed to complete NOC submission',
+          'Close',
+          {
+            duration: 3000,
+            panelClass: ['error-snackbar']
+          }
+        );
+      }
+    });
   }
 
   onFormSubmitFailed(err: any) {
