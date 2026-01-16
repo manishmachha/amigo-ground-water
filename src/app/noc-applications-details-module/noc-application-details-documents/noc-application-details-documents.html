@@ -1,106 +1,243 @@
-<div class="space-y-6">
+<div class="space-y-5">
 
-  <!-- Alert Card -->
-  <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm">
-    <div class="flex items-start gap-2">
-      <i class="bi bi-exclamation-triangle text-base flex-shrink-0"></i>
+  <!-- Header / Summary -->
+  <div class="rounded-2xl border border-slate-200 bg-gradient-to-r from-sky-50 via-white to-white p-4 shadow-sm">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 class="text-base font-semibold text-slate-900">Application Documents</h2>
+        <p class="text-xs text-slate-500">Search, sort, filter, verify/unverify</p>
+      </div>
 
-      <div class="min-w-0">
-        <p class="text-gray-900 break-words">
-          Power Feasibility NOC is pending. All other documents have been verified.
-        </p>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs">
+          <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+          Total: <b class="text-slate-900">{{ totalCount }}</b>
+        </span>
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs text-green-800">
+          <span class="h-2 w-2 rounded-full bg-green-600"></span>
+          Verified: <b>{{ verifiedCount }}</b>
+        </span>
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs text-amber-800">
+          <span class="h-2 w-2 rounded-full bg-amber-600"></span>
+          Pending: <b>{{ pendingCount }}</b>
+        </span>
+
+        <button
+          class="ml-0 sm:ml-2 inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
+          (click)="clearFilters()" [disabled]="!hasAnyFilter">
+          <i class="bi bi-arrow-counterclockwise"></i>
+          Reset filters
+        </button>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-18">
+      <!-- Global Search -->
+      <mat-form-field appearance="outline" class="md:col-span-5 w-full">
+        <mat-label>Search</mat-label>
+        <input matInput [formControl]="searchCtrl" placeholder="Name, filename, type, status, date (dd/mm), size..." />
+        <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+      </mat-form-field>
+
+      <!-- Type -->
+      <mat-form-field appearance="outline" class="md:col-span-3 w-full">
+        <mat-label>Type</mat-label>
+        <mat-select [formControl]="typeCtrl">
+          <mat-option value="ALL">All Types</mat-option>
+          <mat-option *ngFor="let t of availableTypes" [value]="t">{{ t }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Status -->
+      <mat-form-field appearance="outline" class="md:col-span-2 w-full">
+        <mat-label>Status</mat-label>
+        <mat-select [formControl]="statusCtrl">
+          <mat-option value="ALL">All</mat-option>
+          <mat-option value="VERIFIED">Verified</mat-option>
+          <mat-option value="PENDING">Pending</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Size range -->
+      <div class="md:col-span-2 grid grid-cols-2 gap-2">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Min KB</mat-label>
+          <input matInput type="number" [formControl]="minSizeCtrl" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Max KB</mat-label>
+          <input matInput type="number" [formControl]="maxSizeCtrl" />
+        </mat-form-field>
+      </div>
+
+      <!-- Date range -->
+      <mat-form-field appearance="outline" class="md:col-span-6 w-full">
+        <mat-label>Date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate [formControl]="fromDateCtrl" placeholder="From">
+          <input matEndDate [formControl]="toDateCtrl" placeholder="To">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+      <!-- Quick chips -->
+      <div class="md:col-span-6 flex flex-wrap items-center gap-2">
+        <button class="rounded-full border px-3 py-1 text-xs font-medium hover:bg-slate-50"
+          [ngClass]="statusCtrl.value === 'VERIFIED' ? 'border-green-300 bg-green-50 text-green-800' : 'border-slate-200 bg-white text-slate-700'"
+          (click)="setStatus('VERIFIED')">
+          Verified only
+        </button>
+
+        <button class="rounded-full border px-3 py-1 text-xs font-medium hover:bg-slate-50"
+          [ngClass]="statusCtrl.value === 'PENDING' ? 'border-amber-300 bg-amber-50 text-amber-800' : 'border-slate-200 bg-white text-slate-700'"
+          (click)="setStatus('PENDING')">
+          Pending only
+        </button>
+
+        <button class="rounded-full border px-3 py-1 text-xs font-medium hover:bg-slate-50"
+          [ngClass]="typeCtrl.value === 'ALL' ? 'border-slate-300 bg-slate-50 text-slate-800' : 'border-slate-200 bg-white text-slate-700'"
+          (click)="typeCtrl.setValue('ALL')">
+          All types
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Table Card -->
-  <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
-
+  <!-- Table -->
+  <div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
     <div class="overflow-x-auto">
-      <table mat-table [dataSource]="dataSource" matSort class="w-full text-sm">
+      <table mat-table [dataSource]="dataSource" matSort matSortDisableClear class="w-full text-sm">
 
         <!-- Document Name -->
-        <ng-container matColumnDef="documentName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Document Name</th>
-          <td mat-cell *matCellDef="let row" class="font-medium">
-            {{ row.documentName }}
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header
+            class="bg-slate-50 text-xs font-semibold text-slate-600 uppercase tracking-wide">
+            Document
+          </th>
+          <td mat-cell *matCellDef="let row" class="py-3">
+            <div class="font-medium text-slate-900">{{ row.name }}</div>
+            <div class="text-xs text-slate-500 truncate max-w-[420px]">{{ row.fileName }}</div>
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="status" class="border border-gray-200">
-          <th mat-header-cell *matHeaderCellDef>Status</th>
-          <td mat-cell *matCellDef="let row">
-            <span
-              class="inline-flex items-center justify-center rounded-full border border-gray-200 px-2 py-0.5 text-xs font-medium whitespace-nowrap"
-              [ngClass]="getStatusClass(row.status)">
-              {{ row.status === 'VERIFIED' ? 'Verified'
-              : row.status === 'PENDING' ? 'Pending Verification'
-              : 'Not Uploaded' }}
+        <!-- Type -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header
+            class="bg-slate-50 text-xs font-semibold text-slate-600 uppercase tracking-wide">
+            Type
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-slate-700">
+            <span class="inline-flex rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs">
+              {{ row.type }}
             </span>
           </td>
         </ng-container>
 
+        <!-- Status -->
+        <ng-container matColumnDef="isVerified">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header
+            class="bg-slate-50 text-xs font-semibold text-slate-600 uppercase tracking-wide">
+            Status
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span class="inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-xs font-semibold"
+              [ngClass]="row.isVerified
+                ? 'border-green-200 bg-green-50 text-green-800'
+                : 'border-amber-200 bg-amber-50 text-amber-800'">
+              <span class="h-2 w-2 rounded-full" [ngClass]="row.isVerified ? 'bg-green-600' : 'bg-amber-600'"></span>
+              {{ row.isVerified ? 'Verified' : 'Pending' }}
+            </span>
+          </td>
+        </ng-container>
 
         <!-- Upload Date -->
-        <ng-container matColumnDef="uploadDate">
-          <th mat-header-cell *matHeaderCellDef>Upload Date</th>
-          <td mat-cell *matCellDef="let row">
-            {{ row.uploadDate || '-' }}
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header
+            class="bg-slate-50 text-xs font-semibold text-slate-600 uppercase tracking-wide">
+            Uploaded
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-slate-700">
+            {{ row.createdAt | date:'dd/MM/yyyy' }}
           </td>
         </ng-container>
 
         <!-- Size -->
-        <ng-container matColumnDef="size">
-          <th mat-header-cell *matHeaderCellDef>Size</th>
-          <td mat-cell *matCellDef="let row" class="text-right">
-            {{ row.size || '-' }}
+        <ng-container matColumnDef="fileSize">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header
+            class="bg-slate-50 text-xs font-semibold text-slate-600 uppercase tracking-wide text-right">
+            Size
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-right tabular-nums text-slate-700">
+            {{ row.fileSize }} KB
           </td>
         </ng-container>
 
         <!-- Actions -->
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
+          <th mat-header-cell *matHeaderCellDef
+            class="bg-slate-50 text-xs font-semibold text-slate-600 uppercase tracking-wide text-center">
+            Actions
+          </th>
           <td mat-cell *matCellDef="let row" class="text-center">
             <div class="flex items-center justify-center gap-2">
-              <button class="h-8 w-8 rounded-md border border-gray-200 hover:bg-gray-100" (click)="onPreview(row)">
-                <i class="bi bi-eye text-blue-600"></i>
+
+              <button
+                class="h-9 w-9 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 shadow-sm flex items-center justify-center"
+                (click)="onPreview(row)" matTooltip="Preview">
+                <i class="bi bi-eye text-sky-700"></i>
               </button>
 
-              <button class="h-8 w-8 rounded-md border border-gray-200 hover:bg-gray-100" (click)="onDownload(row)">
-                <i class="bi bi-download text-gray-700"></i>
+              <button
+                class="h-9 w-9 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 shadow-sm flex items-center justify-center"
+                (click)="onDownload(row)" matTooltip="Download">
+                <i class="bi bi-download text-slate-700"></i>
               </button>
+
+              <button class="h-9 w-9 rounded-xl border shadow-sm flex items-center justify-center" [ngClass]="row.isVerified
+                  ? 'border-red-200 bg-red-50 hover:bg-red-100 text-red-700'
+                  : 'border-green-200 bg-green-50 hover:bg-green-100 text-green-700'"
+                (click)="toggleDocumentVerification(row)" [matTooltip]="row.isVerified ? 'Unverify' : 'Verify'">
+                <i class="bi" [ngClass]="row.isVerified ? 'bi-x-lg' : 'bi-check-lg'"></i>
+              </button>
+
             </div>
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hover:bg-slate-50 transition-colors"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell p-6 text-center text-slate-500" colspan="6">
+            <div class="flex flex-col items-center gap-2">
+              <i class="bi bi-inbox text-2xl text-slate-300"></i>
+              No documents found for the current filters.
+            </div>
+          </td>
+        </tr>
 
       </table>
     </div>
 
     <!-- Pagination -->
-    <div class="px-4 py-3">
-      <mat-paginator [pageSizeOptions]="[5,10,20]" class="rounded-md">
-      </mat-paginator>
+    <div class="px-4 py-3 border-t border-slate-200 bg-white">
+      <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
     </div>
-
   </div>
 
-  <!-- Bottom Buttons -->
-  <div class="flex flex-wrap justify-end gap-2 sm:gap-3 px-4 py-4 border-t border-gray-200 bg-white">
-
-    <button class="flex items-center gap-2 px-4 py-2 rounded-md border border-gray-200 hover:bg-gray-50 text-sm">
+  <!-- Bottom -->
+  <div
+    class="flex flex-wrap justify-end gap-2 sm:gap-3 px-4 py-4 rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <button (click)="requestClarification()"
+      class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-medium text-slate-700">
       <i class="bi bi-chat-left-text"></i>
-      Request Additional Documents
+      Request Clarification
     </button>
-
-    <button
-      class="flex items-center gap-2 px-4 py-2 rounded-md bg-green-600 hover:bg-green-700 text-white text-sm min-w-[140px]">
-      <i class="bi bi-check-circle"></i>
-      Mark All Verified
-    </button>
-
   </div>
 
 </div>

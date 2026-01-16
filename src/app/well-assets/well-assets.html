@@ -3,16 +3,7 @@
   <!-- HEADER -->
   <div class="bg-white px-8 py-5">
     <div class="flex justify-between items-start">
-      <div>
-        <h1 class="text-3xl font-semibold text-gray-900">
-          Wells & Assets Dashboard
-        </h1>
-        <p class="text-xl text-gray-500 mt-1">
-          Comprehensive groundwater asset monitoring and registry
-        </p>
-      </div>
-
-      <div class="flex gap-3">
+      <div class="flex gap-3 ml-auto">
         <button class="flex items-center gap-2 px-4 py-2 text-xl font-medium border border-gray-200 rounded-lg">
           <i class="bi bi-funnel"></i> Advanced Filters
         </button>
@@ -52,13 +43,9 @@
 
     <!-- STATS -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <div
-        *ngFor="let s of stats"
-        class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition">
+      <div *ngFor="let s of stats" class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition">
 
-        <div
-          class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-          [ngClass]="s.bg">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4" [ngClass]="s.bg">
           <i class="bi text-xl" [ngClass]="[s.icon, s.color]"></i>
         </div>
 
@@ -130,8 +117,7 @@
     <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition">
       <h2 class="font-semibold text-gray-900 mb-4 text-xl">Map Overview</h2>
 
-      <div
-        class="h-96 bg-gradient-to-br from-blue-100 to-cyan-100
+      <div class="h-96 bg-gradient-to-br from-blue-100 to-cyan-100
                border-2 border-dashed border-blue-300 rounded-xl
                flex flex-col items-center justify-center text-center">
 

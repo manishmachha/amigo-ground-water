@@ -1,4 +1,9 @@
-<div class=" bg-white rounded-2xl shadow p-8">
-        <amigo-form [formId]="formId" (submitted)="onFormSubmitted($event)"
-            (submitFailed)="onFormSubmitFailed($event)"></amigo-form>
-    </div>
+<div class="bg-white rounded-2xl shadow p-6">
+  <h2 class="text-xl font-medium mb-4">Application Approval</h2>
+  <amigo-form 
+    [formId]="formId" 
+    [mode]="mode"
+    (submitted)="onFormSubmitted($event)"
+  ></amigo-form>
+  <!-- NOTE: Ensure the form has 'decision' (Select) and 'remarks' (Textarea) fields -->
+</div>

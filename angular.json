@@ -62,7 +62,8 @@
               "buildTarget": "amigo-ground-water-21:build:production"
             },
             "development": {
-              "buildTarget": "amigo-ground-water-21:build:development"
+              "buildTarget": "amigo-ground-water-21:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

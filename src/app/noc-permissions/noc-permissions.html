@@ -1,27 +1,6 @@
 <div class="bg-slate-50 ">
 
-  <!-- HEADER -->
-  <div class="bg-white border-b border-gray-200">
-    <div class="max-w-12xl mx-auto px-6 py-6 flex items-center justify-between">
 
-      <!-- Title -->
-      <div>
-        <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p class="text-gray-500 text-sm">
-          Welcome back, here's what's happening today
-        </p>
-      </div>
-
-      <!-- CTA -->
-      <button
-        class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5
-               text-sm font-medium text-white shadow hover:bg-blue-700 transition">
-        <i class="bi bi-file-earmark-plus"></i>
-        New Application
-      </button>
-
-    </div>
-  </div>
 
   <!-- KPI CARDS -->
   <div class="max-w-12xl mx-auto px-6 py-10">
@@ -101,17 +80,14 @@
             <span class="font-medium text-gray-900">
               {{ c.name }}
             </span>
-            <span
-              class="px-2 py-0.5 rounded-full text-xs font-medium
+            <span class="px-2 py-0.5 rounded-full text-xs font-medium
                      bg-blue-50 text-blue-600">
               {{ c.value }}
             </span>
           </div>
 
           <div class="w-full h-2 rounded-full bg-gray-200 overflow-hidden">
-            <div
-              class="h-2 bg-gray-900 rounded-full"
-              [style.width.%]="c.percent">
+            <div class="h-2 bg-gray-900 rounded-full" [style.width.%]="c.percent">
             </div>
           </div>
         </div>
@@ -153,10 +129,8 @@
                 {{ d.total }}
               </td>
               <td class="px-4 py-3 text-right">
-                <span
-                  class="inline-flex items-center justify-center
-                         min-w-[32px] px-2 py-0.5 rounded-full text-xs font-semibold"
-                  [ngClass]="
+                <span class="inline-flex items-center justify-center
+                         min-w-[32px] px-2 py-0.5 rounded-full text-xs font-semibold" [ngClass]="
                     d.critical > 10
                       ? 'bg-red-600 text-white'
                       : 'bg-gray-100 text-gray-800'
@@ -191,8 +165,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
       <!-- View All Applications -->
-      <div
-        class="relative bg-white rounded-2xl border border-gray-200 p-6
+      <div class="relative bg-white rounded-2xl border border-gray-200 p-6
                hover:shadow-md transition cursor-pointer">
 
         <!-- Arrow -->
@@ -213,8 +186,7 @@
       </div>
 
       <!-- Apply for New NOC -->
-      <div
-        class="relative bg-white rounded-2xl border border-gray-200 p-6
+      <div class="relative bg-white rounded-2xl border border-gray-200 p-6
                hover:shadow-md transition cursor-pointer">
 
         <!-- Arrow -->
@@ -235,8 +207,7 @@
       </div>
 
       <!-- NOC Renewals -->
-      <div
-        class="relative bg-white rounded-2xl border border-gray-200 p-6
+      <div class="relative bg-white rounded-2xl border border-gray-200 p-6
                hover:shadow-md transition cursor-pointer">
 
         <!-- Arrow -->

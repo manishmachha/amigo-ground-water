@@ -1,9 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { QuickCardModel, PendingTask, RecentActivity, DashboardMetric } from '../models/district-officer-model';
+import {
+  QuickCardModel,
+  PendingTask,
+  RecentActivity,
+  DashboardMetric,
+} from '../models/district-officer-model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { DistrictOfficerService } from '../services/district-officer.service';
 
 @Component({
   selector: 'app-district-officer',
@@ -13,55 +18,103 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './district-officer.css',
 })
 export class DistrictOfficer implements OnInit {
+  router = inject(Router);
+  private districtService = inject(DistrictOfficerService);
 
-  private router = inject(Router);
-
-  quickCards: QuickCardModel[] = [];
-  pendingTasks: PendingTask[] = [];
-  recentActivities: RecentActivity[] = [];
-  metrics: DashboardMetric[] = [];
-
+  quickCards = signal<QuickCardModel[]>([]);
+  pendingTasks = signal<PendingTask[]>([]);
+  recentActivities = signal<RecentActivity[]>([]);
+  metrics = signal<DashboardMetric[]>([]);
 
   ngOnInit(): void {
-    this.loadCardsModel();
-    this.loadTasksModel();
-    this.loadActivityModel();
-    this.loadMetricsModel();
+    this.loadDashboardData();
   }
 
-  loadCardsModel(): void {
-    this.quickCards = [
+  loadDashboardData(): void {
+    this.districtService.getDashboardStats().subscribe({
+      next: (res: any) => {
+        const data = res.data;
+        this.updateMetrics(data);
+        this.loadCardsModel(data); // Pass data if needed for cards
+      },
+      error: (err) => console.error('Failed to load stats', err),
+    });
+
+    this.districtService.getPendingTasks().subscribe({
+      next: (res: any) => {
+        const tasks = Array.isArray(res) ? res : res.data || [];
+        this.mapPendingTasks(tasks);
+      },
+      error: (err) => console.error('Failed to load tasks', err),
+    });
+
+    // Keep activities mock for now or implement if API exists
+    this.loadActivityModel();
+  }
+
+  mapPendingTasks(tasks: any[]) {
+    const formattedTasks = tasks.map((t: any) => ({
+      id: t.id,
+      title: t.projectName || 'NOC Application',
+      refNo: t.applicationNumber,
+      timeLabel: new Date(t.submittedAt || Date.now()).toLocaleDateString(),
+      colorClass: 'bg-amber-500', // Dynamic based on status?
+      icon: 'bi-file-earmark-text text-yellow-800',
+    }));
+    this.pendingTasks.set(formattedTasks);
+  }
+
+  updateMetrics(data: any) {
+    this.metrics.set([
+      {
+        id: 'm1',
+        label: 'Active NOCs',
+        value: data.pendingApplications || 0,
+        trendText: 'Pending Actions',
+        icon: 'bi-file-earmark-text',
+        statusText: 'Current',
+        textClass: 'text-blue-600',
+      },
+      {
+        id: 'm2',
+        label: 'Approved (Month)',
+        value: data.approvedThisMonth || 0,
+        trendText: 'This Month',
+        icon: 'bi-check-circle',
+        statusText: 'Success',
+        textClass: 'text-green-500',
+      },
+      {
+        id: 'm3',
+        label: 'Total Applications',
+        value: data.totalNocs || 0,
+        trendText: 'All Time',
+        icon: 'bi-folder',
+        statusText: 'Total',
+        textClass: 'text-purple-500',
+      },
+    ]);
+  }
+
+  loadCardsModel(data?: any): void {
+    const pendingCount = data?.pendingApplications || 0;
+    this.quickCards.set([
       {
         id: 'noc',
         title: 'NOC Management',
         subtitle: 'Applications, renewals, approvals',
         description: 'Manage end-to-end NOC lifecycle and district approvals.',
         icon: 'bi-file-earmark-text text-blue-600',
-        footerText: '12 pending'
+        footerText: `${pendingCount} pending`,
       },
+      // ... keep other cards as static or update if APIs available
       {
         id: 'wells',
         title: 'Wells & Assets',
         subtitle: 'Registry, monitoring, linking',
         description: 'Track wells, piezometers, quality sensors.',
         icon: 'bi-droplet text-cyan-600',
-        footerText: '1243 total'
-      },
-      {
-        id: 'monitor',
-        title: 'Monitoring',
-        subtitle: 'Flow meters, quality',
-        description: 'District real-time telemetry alerts.',
-        icon: 'bi-geo-alt text-green-600',
-        footerText: '3 alerts'
-      },
-      {
-        id: 'billing',
-        title: 'Billing & Revenue',
-        subtitle: 'Invoices, payments',
-        description: 'Financial tracking for Hyderabad district.',
-        icon: 'bi-currency-rupee text-amber-600',
-        footerText: '₹12.4L due'
+        footerText: '1243 total',
       },
       {
         id: 'enforce',
@@ -69,89 +122,9 @@ export class DistrictOfficer implements OnInit {
         subtitle: 'WALTA cases',
         description: 'Violations, penalties management.',
         icon: 'bi-exclamation-triangle text-red-600',
-        footerText: '8 active'
+        footerText: '8 active',
       },
-      {
-        id: 'griev',
-        title: 'Grievances',
-        subtitle: 'Resolution, SLA',
-        description: 'Citizen complaints tracking.',
-        icon: 'bi-chat-left-text text-purple-600',
-        footerText: '5 pending'
-      },
-      {
-        id: 'rig',
-        title: 'Rig Management',
-        subtitle: 'Drilling logs',
-        description: 'Registration and movement.',
-        icon: 'bi-truck text-orange-600',
-        footerText: '234 total'
-      },
-      {
-        id: 'tanker',
-        title: 'Tanker/Bulk Supply',
-        subtitle: 'Trips, stations',
-        description: 'Suppliers operations.',
-        icon: 'bi-minecart-loaded text-teal-600',
-        footerText: '89 suppliers'
-      },
-      {
-        id: 'reports',
-        title: 'Reports & Analytics',
-        subtitle: 'Exports, insights',
-        description: 'Custom district reports.',
-        icon: 'bi-bar-chart text-blue-500',
-        footerText: '12 scheduled'
-      },
-      {
-        id: 'admin',
-        title: 'Administration',
-        subtitle: 'Users, roles',
-        description: 'System settings.',
-        icon: 'bi-gear text-gray-600',
-        footerText: '98 active users',
-        badge: '142 users'
-      }
-    ];
-  }
-
-  loadTasksModel(): void {
-    const MODEL: PendingTask[] = [
-      {
-        id: 't1',
-        title: 'Review NOC Application',
-        refNo: 'NOC-2024-001256',
-        timeLabel: 'Today, 5:00 PM',
-        colorClass: 'bg-red-500',
-        icon: 'bi-clock text-orange-800'
-      },
-      {
-        id: 't2',
-        title: 'Field Inspection Due',
-        refNo: 'WELL-HYD-2345',
-        timeLabel: 'Tomorrow',
-        colorClass: 'bg-amber-500',
-        icon: 'bi-geo-alt text-yellow-800'
-      },
-      {
-        id: 't3',
-        title: 'Approve Billing Adjustment',
-        refNo: 'ADJ-2024-0089',
-        timeLabel: 'In 2 days',
-        colorClass: 'bg-green-500',
-        icon: 'bi-receipt text-green-800'
-      },
-      {
-        id: 't4',
-        title: 'Respond to Grievance',
-        refNo: 'GRV-2024-0240',
-        timeLabel: 'Today, 6:00 PM',
-        colorClass: 'bg-red-400',
-        icon: 'bi-chat-left-text text-red-800'
-      }
-    ];
-
-    this.pendingTasks = MODEL;
+    ]);
   }
 
   loadActivityModel(): void {
@@ -162,92 +135,16 @@ export class DistrictOfficer implements OnInit {
         refNo: 'NOC-2024-001234',
         badge: 'success',
         time: '10 mins ago',
-        icon: ''
+        icon: '',
       },
-      {
-        id: 'a2',
-        title: 'Flow Meter Alert',
-        refNo: 'FM-HYD-0089',
-        badge: 'warning',
-        time: '25 mins ago',
-        icon: ''
-      },
-      {
-        id: 'a3',
-        title: 'Payment Received',
-        refNo: 'INV-2024-5678',
-        badge: 'success',
-        time: '1 hour ago',
-        icon: ''
-      },
-      {
-        id: 'a3',
-        title: 'Grievance Assigned',
-        refNo: 'GRV-2024-0234',
-        badge: 'success',
-        time: '1 hour ago',
-        icon: ''
-      },
-      {
-        id: 'a3',
-        title: 'Inspection Completed',
-        refNo: 'INSP-2024-0145',
-        badge: 'success',
-        time: '1 hour ago',
-        icon: ''
-      },
-
     ];
 
-    this.recentActivities = MODEL;
+    this.recentActivities.set(MODEL);
   }
-  loadMetricsModel(): void {
-    const MODEL: DashboardMetric[] = [
-      {
-        id: 'm1',
-        label: 'Active NOCs',
-        value: 847,
-        trendText: '+12 this month',
-        icon: 'bi-file-earmark-text',
-        statusText: 'Above target',
-        textClass: 'text-green-600'
-      },
-      {
-        id: 'm2',
-        label: 'Collection Rate',
-        value: '87.9%',
-        trendText: '+2.1% from target',
-        icon: 'bi-currency-rupee',
-        statusText: 'from target',
-        textClass: 'text-green-500'
-      },
-      {
-        id: 'm3',
-        label: 'Open Violations',
-        value: 8,
-        trendText: '3 need attention',
-        icon: 'bi-exclamation-triangle',
-        statusText: 'need attention',
-        textClass: 'text-red-400'
-      },
-      {
-        id: 'm4',
-        label: 'SLA Compliance',
-        value: '98.2%',
-        trendText: '+2.1% from target',
-        icon: 'bi-clock',
-        statusText: 'Above target',
-        textClass: 'text-purple-500'
-      }
-    ];
 
-    this.metrics = MODEL;
+  onTaskClick(task: PendingTask) {
+    if (task.id) {
+      this.router.navigate(['/noc-application', task.id]);
+    }
   }
 }
-
-// onCardClick(card: DistrictOfficerCard): void {
-//   this.router.navigate(['/district', card.id]);
-// }
-
-
-

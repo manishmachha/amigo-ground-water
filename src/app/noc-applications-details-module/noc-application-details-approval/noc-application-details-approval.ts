@@ -1,24 +1,55 @@
 import { AmigoFormComponent } from '@amigo/amigo-form-renderer';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NocApplicationDetailsService } from '../../services/noc-application-details-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-noc-application-details-approval',
-  imports: [AmigoFormComponent],
+  imports: [AmigoFormComponent, CommonModule],
   templateUrl: './noc-application-details-approval.html',
   styleUrl: './noc-application-details-approval.css',
+  schemas: [NO_ERRORS_SCHEMA],
 })
-export class NocApplicationDetailsApproval {
+export class NocApplicationDetailsApproval implements OnInit {
+  // TODO(AMIGO_FORM_ID): Create a form with "Decision" (Select: APPROVE/REJECT) and "Remarks" (Textarea).
+  formId = '<<MAP_APPROVAL_FORM_ID_HERE>>';
+  mode = 'create';
 
-  formId = '7a459723-6e34-4c4c-801e-77b65e7c3da4';
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private nocService = inject(NocApplicationDetailsService);
 
-   onFormSubmitted(event: any) {
-    // If schema had submitApiUrl => event = { payload, response, action }
-    // Else => event = raw payload (backward compatible)
-    console.log('submitted event:', event);
+  applicationId: string | null = null;
+
+  ngOnInit() {
+    this.route.parent?.paramMap.subscribe((params) => {
+      this.applicationId = params.get('id');
+    });
   }
 
-  onFormSubmitFailed(err: any) {
-    console.error('submit failed:', err);
-  }
+  onFormSubmitted(event: any) {
+    if (!this.applicationId) return;
 
+    // Assume payload structure { decision: 'APPROVE'|'REJECT', remarks: '...' }
+    // The renderer validates it.
+    const payload = event.data || {};
+    const decision = payload.decision; // Ensure your Amigo Form has this field key
+    const remarks = payload.remarks; // Ensure your Amigo Form has this field key
+
+    if (!decision) {
+      console.error('Decision is missing in form payload');
+      return;
+    }
+
+    const action = decision === 'APPROVE' ? 'APPROVE' : 'REJECT';
+
+    this.nocService.performAction(this.applicationId, action, {}, remarks).subscribe({
+      next: () => {
+        alert(`Application ${decision === 'APPROVE' ? 'Approved' : 'Rejected'} Successfully`);
+        this.router.navigate(['/district-officer']);
+      },
+      error: (err) => console.error('Approval action failed', err),
+    });
+  }
 }

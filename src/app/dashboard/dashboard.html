@@ -1,106 +1,74 @@
-<div class="bg-slate-50 ">
+<!-- CONTENT -->
+<div class="max-w-12xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-  <!-- HEADER -->
-  <div class="bg-white border-b border-gray-200">
-    <div class="max-w-12xl mx-auto px-6 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+  <!-- LEFT CARD -->
+  <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+    <h2 class="text-lg font-semibold text-gray-900">
+      Assessment Category Distribution
+    </h2>
+    <p class="text-sm text-gray-500 mb-6">
+      Statewide groundwater assessment classification
+    </p>
 
-      <div>
-        <h1 class="text-2xl font-bold text-gray-900">
-          State Groundwater Analytics
-        </h1>
-        <p class="text-gray-500">
-          Comprehensive statewide groundwater resource monitoring & intelligence
-        </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+
+      <!-- Donut -->
+      <div class="flex justify-center">
+        <canvas id="assessmentChart" class="max-w-[240px]"></canvas>
       </div>
 
-      <div class="flex items-center gap-3">
-        <select class="px-4 py-2 rounded-lg border border-gray-300 text-sm">
-          <option>Last 12 Months</option>
-          <option>Last 6 Months</option>
-          <option>Last 3 Months</option>
-        </select>
+      <!-- Legend -->
+      <div class="space-y-4 text-sm">
+        <div class="flex justify-between">
+          <span class="flex items-center gap-2">
+            <span class="w-3 h-3 bg-emerald-500 rounded-full"></span>
+            Safe
+          </span>
+          <span class="font-medium">15,234 <span class="text-gray-500">53.2%</span></span>
+        </div>
 
-        <button
-          class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-100 text-sm font-medium">
-          <i class="bi bi-download"></i>
-          Export Report
-        </button>
+        <div class="flex justify-between">
+          <span class="flex items-center gap-2">
+            <span class="w-3 h-3 bg-amber-500 rounded-full"></span>
+            Semi-Critical
+          </span>
+          <span class="font-medium">7,123 <span class="text-gray-500">24.9%</span></span>
+        </div>
+
+        <div class="flex justify-between">
+          <span class="flex items-center gap-2">
+            <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+            Critical
+          </span>
+          <span class="font-medium">4,267 <span class="text-gray-500">14.9%</span></span>
+        </div>
+
+        <div class="flex justify-between">
+          <span class="flex items-center gap-2">
+            <span class="w-3 h-3 bg-red-900 rounded-full"></span>
+            Over-Exploited
+          </span>
+          <span class="font-medium">1,976 <span class="text-gray-500">6.9%</span></span>
+        </div>
       </div>
 
     </div>
   </div>
 
-  <!-- CONTENT -->
-  <div class="max-w-12xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+  <!-- RIGHT CARD -->
+  <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+    <h2 class="text-lg font-semibold text-gray-900">
+      Extraction vs Permitted (MCM)
+    </h2>
+    <p class="text-sm text-gray-500 mb-6">
+      Rolling 12-month extraction analysis
+    </p>
 
-    <!-- LEFT CARD -->
-    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-      <h2 class="text-lg font-semibold text-gray-900">
-        Assessment Category Distribution
-      </h2>
-      <p class="text-sm text-gray-500 mb-6">
-        Statewide groundwater assessment classification
-      </p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-
-        <!-- Donut -->
-        <div class="flex justify-center">
-          <canvas id="assessmentChart" class="max-w-[240px]"></canvas>
-        </div>
-
-        <!-- Legend -->
-        <div class="space-y-4 text-sm">
-          <div class="flex justify-between">
-            <span class="flex items-center gap-2">
-              <span class="w-3 h-3 bg-emerald-500 rounded-full"></span>
-              Safe
-            </span>
-            <span class="font-medium">15,234 <span class="text-gray-500">53.2%</span></span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="flex items-center gap-2">
-              <span class="w-3 h-3 bg-amber-500 rounded-full"></span>
-              Semi-Critical
-            </span>
-            <span class="font-medium">7,123 <span class="text-gray-500">24.9%</span></span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="flex items-center gap-2">
-              <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-              Critical
-            </span>
-            <span class="font-medium">4,267 <span class="text-gray-500">14.9%</span></span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="flex items-center gap-2">
-              <span class="w-3 h-3 bg-red-900 rounded-full"></span>
-              Over-Exploited
-            </span>
-            <span class="font-medium">1,976 <span class="text-gray-500">6.9%</span></span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- RIGHT CARD -->
-    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-      <h2 class="text-lg font-semibold text-gray-900">
-        Extraction vs Permitted (MCM)
-      </h2>
-      <p class="text-sm text-gray-500 mb-6">
-        Rolling 12-month extraction analysis
-      </p>
-
-      <canvas id="extractionChart" height="120"></canvas>
-    </div>
-
+    <canvas id="extractionChart" height="120"></canvas>
   </div>
+
 </div>
+
 <div class="max-w-12xl mx-auto px-6 pb-8 grid grid-cols-1 lg:grid-cols-3 gap-8 mt-16">
 
   <!-- NOCs BY CATEGORY -->
@@ -120,9 +88,7 @@
         </div>
 
         <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            class="h-2 bg-gray-900 rounded-full"
-            [style.width.%]="c.percent">
+          <div class="h-2 bg-gray-900 rounded-full" [style.width.%]="c.percent">
           </div>
         </div>
       </div>
@@ -143,24 +109,19 @@
           <div class="flex items-center gap-2">
             <span class="font-semibold">{{ m.value }}%</span>
 
-            <span
-              class="w-6 h-6 flex items-center justify-center rounded-full text-xs"
-              [ngClass]="
+            <span class="w-6 h-6 flex items-center justify-center rounded-full text-xs" [ngClass]="
                 m.status === 'ok'
                 ? 'bg-green-100 text-green-600'
                 : 'bg-orange-100 text-orange-600'
               ">
-              <i class="bi"
-                 [ngClass]="m.status === 'ok' ? 'bi-check-lg' : 'bi-exclamation'">
+              <i class="bi" [ngClass]="m.status === 'ok' ? 'bi-check-lg' : 'bi-exclamation'">
               </i>
             </span>
           </div>
         </div>
 
         <div class="w-full h-2 bg-gray-200 rounded-full">
-          <div
-            class="h-2 bg-gray-900 rounded-full"
-            [style.width.%]="m.value">
+          <div class="h-2 bg-gray-900 rounded-full" [style.width.%]="m.value">
           </div>
         </div>
       </div>
@@ -208,27 +169,26 @@
 
 <div class="max-w-12xl mx-auto px-6">
   <div class="rounded-lg border shadow-sm bg-white border-slate-200">
-  <!-- HEADER -->
-  <div class="flex flex-col space-y-1.5 p-6">
-    <h3 class="text-2xl font-medium leading-none tracking-tight flex items-center justify-between">
-      <span>District-wise NOC Distribution</span>
+    <!-- HEADER -->
+    <div class="flex flex-col space-y-1.5 p-6">
+      <h3 class="text-2xl font-medium leading-none tracking-tight flex items-center justify-between">
+        <span>District-wise NOC Distribution</span>
 
-      <button
-        class="inline-flex items-center justify-center gap-2 text-sm font-medium h-9 rounded-md px-3
+        <button class="inline-flex items-center justify-center gap-2 text-sm font-medium h-9 rounded-md px-3
                border border-gray-200 hover:bg-gray-100 cursor-pointer">
-        View Details
-        <i class="bi bi-chevron-right"></i>
-      </button>
-    </h3>
+          View Details
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </h3>
 
-    <p class="text-sm text-gray-500">
-      NOCs by district with critical/OE area breakdown
-    </p>
-  </div>
+      <p class="text-sm text-gray-500">
+        NOCs by district with critical/OE area breakdown
+      </p>
+    </div>
 
-  <!-- TABLE -->
-  <div class="p-6 pt-0">
-    <!-- <div class="relative w-full overflow-auto">
+    <!-- TABLE -->
+    <div class="p-6 pt-0">
+      <!-- <div class="relative w-full overflow-auto">
 
       <table
         mat-table
@@ -331,129 +291,123 @@
       </mat-paginator>
 
     </div> -->
-  </div>
-</div>
-
-<div class="max-w-12xl mx-auto px-6 mt-8">
-  <div class="rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
-
-  <!-- Header -->
-  <div class="mb-4">
-    <h2 class="text-lg font-semibold text-gray-900">
-      GIS Heatmap Overview
-    </h2>
-    <p class="text-sm text-gray-500">
-      Spatial visualization of extraction hotspots and well density
-    </p>
+    </div>
   </div>
 
-  <!-- Heatmap Placeholder -->
-  <div
-    class="relative flex flex-col items-center justify-center text-center
+  <div class="max-w-12xl mx-auto px-6 mt-8">
+    <div class="rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
+
+      <!-- Header -->
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-gray-900">
+          GIS Heatmap Overview
+        </h2>
+        <p class="text-sm text-gray-500">
+          Spatial visualization of extraction hotspots and well density
+        </p>
+      </div>
+
+      <!-- Heatmap Placeholder -->
+      <div class="relative flex flex-col items-center justify-center text-center
            h-[320px] rounded-2xl border-2 border-dashed border-blue-300
            bg-gradient-to-br
            from-blue-50 via-cyan-50 via-emerald-50 to-yellow-50">
 
-    <!-- Icon -->
-    <div
-      class="mb-4 flex h-14 w-14 items-center justify-center
+        <!-- Icon -->
+        <div class="mb-4 flex h-14 w-14 items-center justify-center
              rounded-full bg-blue-100 text-blue-600">
-      <i class="bi bi-geo-alt-fill text-3xl"></i>
-    </div>
+          <i class="bi bi-geo-alt-fill text-3xl"></i>
+        </div>
 
-    <!-- Title -->
-    <h3 class="text-lg font-semibold text-gray-900 mb-1">
-      Interactive GIS Visualization
-    </h3>
+        <!-- Title -->
+        <h3 class="text-lg font-semibold text-gray-900 mb-1">
+          Interactive GIS Visualization
+        </h3>
 
-    <!-- Description -->
-    <p class="text-sm text-gray-600 max-w-md mb-6">
-      Well density, extraction hotspots, declining WL zones,
-      and enforcement areas
-    </p>
+        <!-- Description -->
+        <p class="text-sm text-gray-600 max-w-md mb-6">
+          Well density, extraction hotspots, declining WL zones,
+          and enforcement areas
+        </p>
 
-    <!-- Button -->
-    <button
-      class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5
+        <!-- Button -->
+        <button class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5
              text-sm font-medium text-white shadow
              hover:bg-blue-700 transition">
-      <i class="bi bi-geo"></i>
-      Launch GIS Map
-    </button>
+          <i class="bi bi-geo"></i>
+          Launch GIS Map
+        </button>
 
-  </div>
-
-</div>
-
-
-<div class="max-w-12xl mx-auto px-6 pb-12 mt-8">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-    <!-- Extraction vs Recharge -->
-    <div
-      class="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
-             hover:shadow-md transition cursor-pointer">
-
-      <!-- Arrow -->
-      <i class="bi bi-chevron-right absolute top-6 right-6 text-gray-400"></i>
-
-      <!-- Icon -->
-      <div class="mb-4 text-blue-600">
-        <i class="bi bi-graph-up-arrow text-3xl"></i>
       </div>
 
-      <!-- Content -->
-      <h3 class="text-lg font-semibold text-gray-900 mb-1">
-        Extraction vs Recharge
-      </h3>
-      <p class="text-sm text-gray-600">
-        Sustainability analysis and gap assessment
-      </p>
     </div>
 
-    <!-- Water Level Trends -->
-    <div
-      class="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
+
+    <div class="max-w-12xl mx-auto px-6 pb-12 mt-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Extraction vs Recharge -->
+        <div class="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
              hover:shadow-md transition cursor-pointer">
 
-      <!-- Arrow -->
-      <i class="bi bi-chevron-right absolute top-6 right-6 text-gray-400"></i>
+          <!-- Arrow -->
+          <i class="bi bi-chevron-right absolute top-6 right-6 text-gray-400"></i>
 
-      <!-- Icon -->
-      <div class="mb-4 text-cyan-600">
-        <i class="bi bi-activity text-3xl"></i>
-      </div>
+          <!-- Icon -->
+          <div class="mb-4 text-blue-600">
+            <i class="bi bi-graph-up-arrow text-3xl"></i>
+          </div>
 
-      <!-- Content -->
-      <h3 class="text-lg font-semibold text-gray-900 mb-1">
-        Water Level Trends
-      </h3>
-      <p class="text-sm text-gray-600">
-        Piezometer analysis and WL monitoring
-      </p>
-    </div>
+          <!-- Content -->
+          <h3 class="text-lg font-semibold text-gray-900 mb-1">
+            Extraction vs Recharge
+          </h3>
+          <p class="text-sm text-gray-600">
+            Sustainability analysis and gap assessment
+          </p>
+        </div>
 
-    <!-- Water Quality Trends -->
-    <div
-      class="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
+        <!-- Water Level Trends -->
+        <div class="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
              hover:shadow-md transition cursor-pointer">
 
-      <!-- Arrow -->
-      <i class="bi bi-chevron-right absolute top-6 right-6 text-gray-400"></i>
+          <!-- Arrow -->
+          <i class="bi bi-chevron-right absolute top-6 right-6 text-gray-400"></i>
 
-      <!-- Icon -->
-      <div class="mb-4 text-green-600">
-        <i class="bi bi-droplet-half text-3xl"></i>
+          <!-- Icon -->
+          <div class="mb-4 text-cyan-600">
+            <i class="bi bi-activity text-3xl"></i>
+          </div>
+
+          <!-- Content -->
+          <h3 class="text-lg font-semibold text-gray-900 mb-1">
+            Water Level Trends
+          </h3>
+          <p class="text-sm text-gray-600">
+            Piezometer analysis and WL monitoring
+          </p>
+        </div>
+
+        <!-- Water Quality Trends -->
+        <div class="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm
+             hover:shadow-md transition cursor-pointer">
+
+          <!-- Arrow -->
+          <i class="bi bi-chevron-right absolute top-6 right-6 text-gray-400"></i>
+
+          <!-- Icon -->
+          <div class="mb-4 text-green-600">
+            <i class="bi bi-droplet-half text-3xl"></i>
+          </div>
+
+          <!-- Content -->
+          <h3 class="text-lg font-semibold text-gray-900 mb-1">
+            Water Quality Trends
+          </h3>
+          <p class="text-sm text-gray-600">
+            Parameter analysis and contamination tracking
+          </p>
+        </div>
+
       </div>
-
-      <!-- Content -->
-      <h3 class="text-lg font-semibold text-gray-900 mb-1">
-        Water Quality Trends
-      </h3>
-      <p class="text-sm text-gray-600">
-        Parameter analysis and contamination tracking
-      </p>
     </div>
-
-  </div>
-</div>

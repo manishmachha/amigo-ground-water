@@ -1,43 +1,65 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ApplicantInfo } from '../../models/noc-application-details-applicant-model';
 import { NocApplicationDetailsService } from '../../services/noc-application-details-service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+
+export interface NocApplicant {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+  fullName: string;
+  mobileNumber: string;
+  fatherName: string;
+  gender: string;
+  idProofType: string;
+  idProofNumber: string;
+  idProofFilePath: string;
+  roleId: string;
+  doorNumber: string;
+  street: string;
+  district: string;
+  mandal: string;
+  village: string;
+  pinCode: string;
+  termsAgreed: boolean;
+  organisationName: string | null;
+  GSTNumber: string | null;
+  PANNumber: string | null;
+}
 
 @Component({
   selector: 'app-noc-application-details-applicant',
   templateUrl: './noc-application-details-applicant.html',
   styleUrl: './noc-application-details-applicant.css',
-  imports:[CommonModule]
+  standalone: true,
+  imports: [CommonModule],
 })
 export class NocApplicationDetailsApplicant implements OnInit {
-
-  applicantInfo = signal<ApplicantInfo []>([]);
   route = inject(ActivatedRoute);
+  nocService = inject(NocApplicationDetailsService);
 
-  nocApplicantInfo = inject(NocApplicationDetailsService);
+  applicant = signal<NocApplicant | null>(null);
 
   ngOnInit(): void {
-  const id = this.route.parent?.snapshot.paramMap.get('id');
-  console.log('Clicked Application ID:', id);
-
-  if (id) {
-    this.loadApplicantInfo(id);
+    const id = this.route.parent?.snapshot.paramMap.get('id');
+    if (id) {
+      this.loadApplicantData(id);
+    }
   }
-}
 
-
-  loadApplicantInfo(id: string) {
-    // const applicantId = '6e60aebc-ae10-4452-a599-e211ab54da2b';
-
-    this.nocApplicantInfo.nocApplicantDetails(id).subscribe({
+  loadApplicantData(id: string) {
+    this.nocService.nocApplicantionDetails(id).subscribe({
       next: (res: any) => {
-        console.log('API response', res);
-        this.applicantInfo.set([res.data.applicant]); 
+        this.applicant.set(res.data.applicant);
       },
       error: (err) => {
-        console.error('Failed To Load Applicant Data', err);
-      }
+        console.error('Failed To Load Application Data', err);
+      },
     });
+  }
+
+  openDocument(url: string) {
+    window.open(url, '_blank');
   }
 }

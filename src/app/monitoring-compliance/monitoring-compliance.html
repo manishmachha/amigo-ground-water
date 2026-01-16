@@ -1,96 +1,46 @@
 <div class="bg-slate-50 ">
 
-  <!-- HEADER -->
-  <div class="bg-white border-b border-gray-200">
-    <div class="max-w-12xl mx-auto px-6 py-6 flex flex-col gap-4">
 
-      <!-- Title Row -->
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-
-        <div>
-          <h1 class="text-2xl font-bold text-gray-900">
-            Monitoring & Compliance
-          </h1>
-          <p class="text-gray-500">
-            Real-time water level & quality monitoring with telemetry integration
-          </p>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <select class="px-4 py-2 rounded-lg border border-gray-300 text-sm">
-            <option>Last 30 Days</option>
-            <option>Last 90 Days</option>
-            <option>Last 6 Months</option>
-          </select>
-
-          <button
-            class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300
-                   bg-white hover:bg-gray-100 text-sm font-medium">
-            <i class="bi bi-download"></i>
-            Export Report
-          </button>
-
-          <button
-            class="flex items-center gap-2 px-5 py-2 rounded-lg bg-blue-600
-                   text-white text-sm font-medium hover:bg-blue-700">
-            <i class="bi bi-droplet"></i>
-            Submit WL Data
-          </button>
-        </div>
-      </div>
-
-      <!-- Filter -->
-      <div>
-        <select class="px-4 py-2 rounded-lg border border-gray-300 text-sm">
-          <option>All Districts</option>
-          <option>Hyderabad</option>
-          <option>Rangareddy</option>
-          <option>Medchal</option>
-        </select>
-      </div>
-
-    </div>
-  </div>
 
   <!-- KPI CARDS -->
   <div class="py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-      <!-- Card -->
-      <div class="bg-white rounded-2xl  p-6 shadow-sm">
-        <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-6">
-          <i class="bi bi-activity text-xl"></i>
-        </div>
-        <p class="text-sm text-gray-500">ACTIVE PIEZOMETERS</p>
-        <p class="text-3xl font-bold">456</p>
-        <p class="text-sm text-gray-500">89.2% reporting</p>
+    <!-- Card -->
+    <div class="bg-white rounded-2xl  p-6 shadow-sm">
+      <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-6">
+        <i class="bi bi-activity text-xl"></i>
       </div>
-
-      <div class="bg-white rounded-2xl  p-6 shadow-sm">
-        <div class="w-12 h-12 rounded-xl bg-red-100 text-red-600 flex items-center justify-center mb-6">
-          <i class="bi bi-graph-down-arrow text-xl"></i>
-        </div>
-        <p class="text-sm text-gray-500">WATER LEVEL DECLINING</p>
-        <p class="text-3xl font-bold">127</p>
-        <p class="text-sm text-gray-500">27.8% of total</p>
-      </div>
-
-      <div class="bg-white rounded-2xl  p-6 shadow-sm">
-        <div class="w-12 h-12 rounded-xl bg-yellow-100 text-yellow-600 flex items-center justify-center mb-6">
-          <i class="bi bi-exclamation-triangle text-xl"></i>
-        </div>
-        <p class="text-sm text-gray-500">ACTIVE ALERTS</p>
-        <p class="text-3xl font-bold">23</p>
-        <p class="text-sm text-gray-500">8 critical</p>
-      </div>
-
-      <div class="bg-white rounded-2xl  p-6 shadow-sm">
-        <div class="w-12 h-12 rounded-xl bg-green-100 text-green-600 flex items-center justify-center mb-6">
-          <i class="bi bi-check-circle text-xl"></i>
-        </div>
-        <p class="text-sm text-gray-500">COMPLIANCE RATE</p>
-        <p class="text-3xl font-bold">87.3%</p>
-        <p class="text-sm text-green-600">↑ 2.1%</p>
-      </div>
+      <p class="text-sm text-gray-500">ACTIVE PIEZOMETERS</p>
+      <p class="text-3xl font-bold">456</p>
+      <p class="text-sm text-gray-500">89.2% reporting</p>
     </div>
+
+    <div class="bg-white rounded-2xl  p-6 shadow-sm">
+      <div class="w-12 h-12 rounded-xl bg-red-100 text-red-600 flex items-center justify-center mb-6">
+        <i class="bi bi-graph-down-arrow text-xl"></i>
+      </div>
+      <p class="text-sm text-gray-500">WATER LEVEL DECLINING</p>
+      <p class="text-3xl font-bold">127</p>
+      <p class="text-sm text-gray-500">27.8% of total</p>
+    </div>
+
+    <div class="bg-white rounded-2xl  p-6 shadow-sm">
+      <div class="w-12 h-12 rounded-xl bg-yellow-100 text-yellow-600 flex items-center justify-center mb-6">
+        <i class="bi bi-exclamation-triangle text-xl"></i>
+      </div>
+      <p class="text-sm text-gray-500">ACTIVE ALERTS</p>
+      <p class="text-3xl font-bold">23</p>
+      <p class="text-sm text-gray-500">8 critical</p>
+    </div>
+
+    <div class="bg-white rounded-2xl  p-6 shadow-sm">
+      <div class="w-12 h-12 rounded-xl bg-green-100 text-green-600 flex items-center justify-center mb-6">
+        <i class="bi bi-check-circle text-xl"></i>
+      </div>
+      <p class="text-sm text-gray-500">COMPLIANCE RATE</p>
+      <p class="text-3xl font-bold">87.3%</p>
+      <p class="text-sm text-green-600">↑ 2.1%</p>
+    </div>
+  </div>
 </div>
 
 <div class="max-w-12xl mx-auto px-6 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -329,252 +279,225 @@
 </div>
 
 <div class="max-w-10xl mx-auto px-6">
-<div class="rounded-lg border shadow-sm bg-white border-slate-200">
+  <div class="rounded-lg border shadow-sm bg-white border-slate-200">
 
-  <!-- HEADER -->
-  <div class="flex items-center justify-between p-6">
-    <div>
-      <h3 class="text-lg font-semibold text-gray-900">
-        Recent Alerts & Notifications
-      </h3>
-      <p class="text-sm text-gray-500">
-        Critical threshold breaches and monitoring issues
-      </p>
+    <!-- HEADER -->
+    <div class="flex items-center justify-between p-6">
+      <div>
+        <h3 class="text-lg font-semibold text-gray-900">
+          Recent Alerts & Notifications
+        </h3>
+        <p class="text-sm text-gray-500">
+          Critical threshold breaches and monitoring issues
+        </p>
+      </div>
+
+      <button class="inline-flex items-center gap-1 text-sm font-medium text-gray-900 hover:underline">
+        View All
+        <i class="bi bi-arrow-up-right"></i>
+      </button>
     </div>
 
-    <button
-      class="inline-flex items-center gap-1 text-sm font-medium text-gray-900 hover:underline">
-      View All
-      <i class="bi bi-arrow-up-right"></i>
-    </button>
-  </div>
+    <!-- TABLE -->
+    <div class="px-6 pb-6">
+      <div class="relative w-full overflow-auto">
 
-  <!-- TABLE -->
-  <div class="px-6 pb-6">
-    <div class="relative w-full overflow-auto">
+        <table mat-table [dataSource]="alertsDataSource" matSort class="w-full caption-bottom text-sm mat-elevation-z2">
 
-      <table
-        mat-table
-        [dataSource]="alertsDataSource"
-        matSort
-        class="w-full caption-bottom text-sm mat-elevation-z2">
-
-        <!-- Alert ID -->
-        <ng-container matColumnDef="alertId">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header
+          <!-- Alert ID -->
+          <ng-container matColumnDef="alertId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
               class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
-            Alert ID
-          </th>
-          <td mat-cell *matCellDef="let row"
-              class="p-4 text-blue-600 font-medium bg-white border-b">
-            {{ row.alertId }}
-          </td>
-        </ng-container>
+              Alert ID
+            </th>
+            <td mat-cell *matCellDef="let row" class="p-4 text-blue-600 font-medium bg-white border-b">
+              {{ row.alertId }}
+            </td>
+          </ng-container>
 
-        <!-- Type -->
-        <ng-container matColumnDef="type">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header
+          <!-- Type -->
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
               class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
-            Type
-          </th>
-          <td mat-cell *matCellDef="let row"
-              class="p-4 bg-white border-b">
-            {{ row.type }}
-          </td>
-        </ng-container>
+              Type
+            </th>
+            <td mat-cell *matCellDef="let row" class="p-4 bg-white border-b">
+              {{ row.type }}
+            </td>
+          </ng-container>
 
-        <!-- Location -->
-        <ng-container matColumnDef="location">
-          <th mat-header-cell *matHeaderCellDef
+          <!-- Location -->
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef
               class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
-            Location
-          </th>
-          <td mat-cell *matCellDef="let row"
-              class="p-4 bg-white border-b">
-            {{ row.location }}
-          </td>
-        </ng-container>
+              Location
+            </th>
+            <td mat-cell *matCellDef="let row" class="p-4 bg-white border-b">
+              {{ row.location }}
+            </td>
+          </ng-container>
 
-        <!-- District -->
-        <ng-container matColumnDef="district">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header
+          <!-- District -->
+          <ng-container matColumnDef="district">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
               class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
-            District
-          </th>
-          <td mat-cell *matCellDef="let row"
-              class="p-4 bg-white border-b">
-            {{ row.district }}
-          </td>
-        </ng-container>
+              District
+            </th>
+            <td mat-cell *matCellDef="let row" class="p-4 bg-white border-b">
+              {{ row.district }}
+            </td>
+          </ng-container>
 
-        <!-- Severity -->
-        <ng-container matColumnDef="severity">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header
+          <!-- Severity -->
+          <ng-container matColumnDef="severity">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
               class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
-            Severity
-          </th>
-          <td mat-cell *matCellDef="let row"
-              class="p-4 bg-white border-b">
-            <span
-              class="px-3 py-1 rounded-full text-xs font-medium"
-              [ngClass]="severityClass(row.severity)">
-              {{ row.severity }}
-            </span>
-          </td>
-        </ng-container>
+              Severity
+            </th>
+            <td mat-cell *matCellDef="let row" class="p-4 bg-white border-b">
+              <span class="px-3 py-1 rounded-full text-xs font-medium" [ngClass]="severityClass(row.severity)">
+                {{ row.severity }}
+              </span>
+            </td>
+          </ng-container>
 
-        <!-- Value / Issue -->
-        <ng-container matColumnDef="value">
-          <th mat-header-cell *matHeaderCellDef
+          <!-- Value / Issue -->
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef
               class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
-            Value / Issue
-          </th>
-          <td mat-cell *matCellDef="let row"
-              class="p-4 bg-white border-b">
-            {{ row.value }}
-          </td>
-        </ng-container>
+              Value / Issue
+            </th>
+            <td mat-cell *matCellDef="let row" class="p-4 bg-white border-b">
+              {{ row.value }}
+            </td>
+          </ng-container>
 
-        <!-- Timestamp -->
-        <ng-container matColumnDef="timestamp">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header
+          <!-- Timestamp -->
+          <ng-container matColumnDef="timestamp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
               class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
-            Timestamp
-          </th>
-          <td mat-cell *matCellDef="let row"
-              class="p-4 bg-white border-b text-gray-700">
-            {{ row.timestamp }}
-          </td>
-        </ng-container>
+              Timestamp
+            </th>
+            <td mat-cell *matCellDef="let row" class="p-4 bg-white border-b text-gray-700">
+              {{ row.timestamp }}
+            </td>
+          </ng-container>
 
-        <!-- Status -->
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header
+          <!-- Status -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
               class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
-            Status
-          </th>
-          <td mat-cell *matCellDef="let row"
-              class="p-4 bg-white border-b">
-            <span
-              class="px-3 py-1 rounded-full text-xs font-medium"
-              [ngClass]="statusClass(row.status)">
-              {{ row.status }}
-            </span>
-          </td>
-        </ng-container>
+              Status
+            </th>
+            <td mat-cell *matCellDef="let row" class="p-4 bg-white border-b">
+              <span class="px-3 py-1 rounded-full text-xs font-medium" [ngClass]="statusClass(row.status)">
+                {{ row.status }}
+              </span>
+            </td>
+          </ng-container>
 
-        <!-- Actions -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef
+          <!-- Actions -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef
               class="h-12 px-4 text-left font-medium text-gray-500 bg-white border-b">
-            Actions
-          </th>
-          <td mat-cell *matCellDef="let row"
-              class="p-4 bg-white border-b">
-            <button class="font-medium text-gray-900 hover:underline">
-              Acknowledge
-            </button>
-          </td>
-        </ng-container>
+              Actions
+            </th>
+            <td mat-cell *matCellDef="let row" class="p-4 bg-white border-b">
+              <button class="font-medium text-gray-900 hover:underline">
+                Acknowledge
+              </button>
+            </td>
+          </ng-container>
 
-        <!-- ROWS -->
-        <tr mat-header-row *matHeaderRowDef="alertColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: alertColumns"
-            class="hover:bg-gray-50"></tr>
+          <!-- ROWS -->
+          <tr mat-header-row *matHeaderRowDef="alertColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: alertColumns" class="hover:bg-gray-50"></tr>
 
-      </table>
+        </table>
 
-    </div>
-     <mat-paginator
-        class="bg-white"
-        [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 25]"
-        showFirstLastButtons>
+      </div>
+      <mat-paginator class="bg-white" [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons>
       </mat-paginator>
 
+    </div>
   </div>
-</div>
 
 
 
-<div class="max-w-12xl mx-auto px-6 pb-12 mt-8">
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+  <div class="max-w-12xl mx-auto px-6 pb-12 mt-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
-    <!-- Water Level Data Entry -->
-    <div
-      class="relative bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
+      <!-- Water Level Data Entry -->
+      <div class="relative bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
              hover:shadow-md transition cursor-pointer">
 
-      <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
+        <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
 
-      <div class="mb-4 text-blue-600">
-        <i class="bi bi-droplet text-3xl"></i>
+        <div class="mb-4 text-blue-600">
+          <i class="bi bi-droplet text-3xl"></i>
+        </div>
+
+        <h3 class="text-lg font-semibold text-gray-900 mb-1">
+          Water Level Data Entry
+        </h3>
+        <p class="text-sm text-gray-600">
+          Submit monitoring data
+        </p>
       </div>
 
-      <h3 class="text-lg font-semibold text-gray-900 mb-1">
-        Water Level Data Entry
-      </h3>
-      <p class="text-sm text-gray-600">
-        Submit monitoring data
-      </p>
-    </div>
-
-    <!-- Piezometer Network -->
-    <div
-      class="relative bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
+      <!-- Piezometer Network -->
+      <div class="relative bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
              hover:shadow-md transition cursor-pointer">
 
-      <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
+        <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
 
-      <div class="mb-4 text-cyan-600">
-        <i class="bi bi-activity text-3xl"></i>
+        <div class="mb-4 text-cyan-600">
+          <i class="bi bi-activity text-3xl"></i>
+        </div>
+
+        <h3 class="text-lg font-semibold text-gray-900 mb-1">
+          Piezometer Network
+        </h3>
+        <p class="text-sm text-gray-600">
+          Station status & telemetry
+        </p>
       </div>
 
-      <h3 class="text-lg font-semibold text-gray-900 mb-1">
-        Piezometer Network
-      </h3>
-      <p class="text-sm text-gray-600">
-        Station status & telemetry
-      </p>
-    </div>
-
-    <!-- Compliance Tracking -->
-    <div
-      class="relative bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
+      <!-- Compliance Tracking -->
+      <div class="relative bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
              hover:shadow-md transition cursor-pointer">
 
-      <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
+        <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
 
-      <div class="mb-4 text-green-600">
-        <i class="bi bi-check-circle text-3xl"></i>
+        <div class="mb-4 text-green-600">
+          <i class="bi bi-check-circle text-3xl"></i>
+        </div>
+
+        <h3 class="text-lg font-semibold text-gray-900 mb-1">
+          Compliance Tracking
+        </h3>
+        <p class="text-sm text-gray-600">
+          NOC condition monitoring
+        </p>
       </div>
 
-      <h3 class="text-lg font-semibold text-gray-900 mb-1">
-        Compliance Tracking
-      </h3>
-      <p class="text-sm text-gray-600">
-        NOC condition monitoring
-      </p>
-    </div>
-
-    <!-- Inspection Logs -->
-    <div
-      class="relative bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
+      <!-- Inspection Logs -->
+      <div class="relative bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
              hover:shadow-md transition cursor-pointer">
 
-      <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
+        <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
 
-      <div class="mb-4 text-purple-600">
-        <i class="bi bi-bar-chart-line text-3xl"></i>
+        <div class="mb-4 text-purple-600">
+          <i class="bi bi-bar-chart-line text-3xl"></i>
+        </div>
+
+        <h3 class="text-lg font-semibold text-gray-900 mb-1">
+          Inspection Logs
+        </h3>
+        <p class="text-sm text-gray-600">
+          Field visit records
+        </p>
       </div>
 
-      <h3 class="text-lg font-semibold text-gray-900 mb-1">
-        Inspection Logs
-      </h3>
-      <p class="text-sm text-gray-600">
-        Field visit records
-      </p>
     </div>
-
   </div>
-</div>

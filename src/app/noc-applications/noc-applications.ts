@@ -74,7 +74,7 @@ export class NocApplications implements OnInit {
     next: (res: any) => {
       console.log('API response:', res);
 
-      // ✅ THIS IS THE KEY LINE
+      // THIS IS THE KEY LINE
       this.dataSource.data = res.data;
 
       // optional signal (if you need elsewhere)
