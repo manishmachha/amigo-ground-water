@@ -76,8 +76,7 @@
 
         <div class="flex flex-col sm:flex-row sm:justify-between gap-1">
           <span class="text-gray-500">Assessment Category:</span>
-          <span class="inline-flex border bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs"
-          [ngClass]="{
+          <span class="inline-flex border bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs" [ngClass]="{
             'bg-green-300 text-green-700': applicant.assessmentCategory === 'SAFE',
           }">
             {{ applicant.assessmentCategory}}
@@ -103,7 +102,7 @@
 
     <div class="overflow-x-auto">
       <table class="w-full text-sm">
-        <thead class="border border-gray-300 bg-gray-50">
+        <thead class="font-medium border border-gray-300 bg-gray-50">
           <tr>
             <th class="text-left p-3">Type</th>
             <th class="text-right p-3">Daily (m³/day)</th>
@@ -134,8 +133,7 @@
             </td>
           </tr>
         </tbody>
-
-
+        
       </table>
     </div>
   </div>
@@ -182,7 +180,7 @@
             <p class="text-sm text-gray-500">{{ s.specs }}</p>
           </div>
 
-          <span class="bg-green-50 text-green-600 border border-green-200 px-2 py-0.5 rounded-full text-xs w-fit">
+          <span class="bg-green-50 text-green-600 border border-green-200 px-2 py-3 rounded-full text-xs w-fit">
             {{ s.badge }}
           </span>
 

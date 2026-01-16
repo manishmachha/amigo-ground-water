@@ -22,7 +22,6 @@ export class Login {
 
   onFormSubmitted(event: any) {
     console.log('submitted event:', event);
-
     if (event?.response?.success) {
       const roleName = event.response.data.user.role.name;
 
@@ -40,12 +39,12 @@ export class Login {
 
       //  ROLE BASED NAVIGATION
       if (roleName === 'RIG_OWNER') {
-        this.router.navigate(['/rig-owner']);
-      } else if (roleName === 'DISTRICT_OFFICER') {
-        this.router.navigate(['/district-officer']);
-      } else if (roleName === 'FIELD_OFFICER') {
-        this.router.navigate(['/field-officer']);
-      } else {
+        this.router.navigate(['/rig-owner/registered-rigs']);
+      }
+      else if (roleName === 'DISTRICT_OFFICER') {
+        this.router.navigate(['/district-dashboard']);
+      }
+      else {
         this.router.navigate(['/citizen-portal']);
       }
     }

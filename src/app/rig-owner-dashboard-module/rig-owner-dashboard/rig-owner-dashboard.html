@@ -1,0 +1,147 @@
+<div class="max-w-7xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="flex justify-between items-center px-8 py-4 mx-8 bg-white rounded-xl shadow p-6"
+        *ngIf="userInfo() as user">
+        <div class="flex items-center gap-3">
+            <i class="bi bi-truck text-2xl text-blue-600"></i>
+            <div>
+                <h1 class="font-semibold text-lg">Rig Owner Portal</h1>
+                <p class="text-sm text-gray-500">TG-GWRMS</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <i class="bi bi-bell text-xl"></i>
+            <div class="flex items-center gap-2">
+                <i class="bi bi-person-circle text-xl"></i>
+                <span>{{ user?.fullName }}</span>
+            </div>
+            <button (click)="logOut()" class="border px-4 py-1 rounded cursor-pointer">Logout</button>
+        </div>
+    </div>
+
+
+
+    <!-- OWNER INFO CARD -->
+    <div class="mx-8 mt-6 bg-white rounded-xl shadow p-6" *ngIf="userInfo() as user">
+        <h2 class="font-medium mb-4">Owner Information</h2>
+
+        <div class="grid grid-cols-5 gap-6 text-sm">
+            <div>
+                <p class="text-gray-500">Name</p>
+                <p class="font-medium">{{ user.fullName}}</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Mobile</p>
+                <p class="font-medium">+91 {{ user?.mobileNumber }}</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Email</p>
+                <p class="font-medium">{{ user?.email }}</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Organization</p>
+                <p class="font-medium">{{ user?.organisationName }}</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Total Rigs</p>
+                <p class="font-semibold text-blue-600">{{ totalRigs }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTION CARDS -->
+    <div class="grid grid-cols-4 gap-6 mx-8 mt-6">
+
+        <!-- Register Rig -->
+        <div class="p-6 bg-white rounded-xl shadow flex gap-4">
+            <div class="bg-blue-100 p-3 rounded-lg">
+                <i class="bi bi-truck text-blue-600 text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-medium">Register New Rig</h3>
+                <p class="text-sm text-gray-500">Form 15/16</p>
+            </div>
+        </div>
+
+        <!-- Declare Movement -->
+        <div class="p-6 bg-white rounded-xl shadow flex gap-4">
+            <div class="bg-green-100 p-3 rounded-lg">
+                <i class="bi bi-geo-alt text-green-600 text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-medium">Declare Movement</h3>
+                <p class="text-sm text-gray-500">Track Location</p>
+            </div>
+        </div>
+
+        <!-- Drilling Logs -->
+        <div class="p-6 bg-white rounded-xl shadow flex gap-4">
+            <div class="bg-orange-100 p-3 rounded-lg">
+                <i class="bi bi-file-earmark-text text-orange-600 text-xl"></i>
+            </div>
+            <div routerLink="/drilling-log">
+                <h3 class="font-medium">Submit Drilling Log</h3>
+                <p class="text-sm text-gray-500">{{ pendingLogs }} pending</p>
+            </div>
+        </div>
+
+        <!-- Documents -->
+        <div class="p-6 bg-white rounded-xl shadow flex gap-4">
+            <div class="bg-purple-100 p-3 rounded-lg">
+                <i class="bi bi-folder text-purple-600 text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-medium">Documents</h3>
+                <p class="text-sm text-gray-500">Certificates & Forms</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TABS -->
+    <!-- <div class="mx-8 mt-6 flex gap-4"> -->
+    <div class="mt-10 px-2 py-1 grid grid-cols-1 lg:grid-cols-5 gap-4 bg-gray-100 rounded-2xl">
+
+        <!-- Summary -->
+        <button routerLink="registered-rigs" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md  text-gray-700 cursor-pointer">
+            <i class="bi bi-file-text text-lg"></i>
+            <span>Registered Rigs</span>
+        </button>
+
+        <!-- Applicant -->
+        <button routerLink="drilling-logs" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700 cursor-pointer">
+            <i class="bi bi-person text-lg"></i>
+            <span>Drilling Logs</span>
+        </button>
+
+        <!-- Documents -->
+        <button routerLink="violations" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700 cursor-pointer">
+            <i class="bi bi-upload text-lg"></i>
+            <span>Violations</span>
+        </button>
+
+        <!-- Technical Review -->
+        <button routerLink="renewals" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700 cursor-pointer">
+            <i class="bi bi-gear text-lg"></i>
+            <span>Renewals</span>
+        </button>
+
+        <!-- Field Investigation -->
+        <button routerLink="activity" routerLinkActive="border border-gray-300 bg-white"
+            class="flex items-center justify-center gap-2 px-4 py-2 rounded-md text-gray-700 cursor-pointer">
+            <i class="bi bi-geo-alt text-lg"></i>
+            <span>Activity</span>
+        </button>
+    </div>
+    <router-outlet></router-outlet>
+</div>

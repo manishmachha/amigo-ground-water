@@ -75,7 +75,6 @@ export class NocApplicationDetailsSummary implements OnInit {
     }
   }
 
-
   loadApplicantSummary(id: string) {
     // const applicantId = '036d17d3-d0a5-4b30-91ad-60781fa000f7';
 

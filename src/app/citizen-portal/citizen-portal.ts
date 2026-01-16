@@ -1,6 +1,7 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { OnInit } from '@angular/core';
 import { CitizenProfileService } from '../services/citizen-portal-service';
 import { AmigoFormComponent } from '@amigo/amigo-form-renderer';
 import { CommonModule } from '@angular/common';
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './citizen-portal.css',
 })
 export class CitizenPortal implements OnInit {
+
   searchText = '';
   applications = signal<any[]>([]);
   grievances = signal<any[]>([]);
@@ -53,7 +55,7 @@ export class CitizenPortal implements OnInit {
       title: 'Report Violation',
       icon: 'bi-exclamation-triangle',
       bg: 'bg-orange-500',
-      routerLink: '/report-voilation',
+      routerLink: '/report-voilation'
     },
     {
       title: 'Submit Grievance',
@@ -208,11 +210,21 @@ export class CitizenPortal implements OnInit {
 
   visibleDocuments() {
     const list = this.document();
-    return this.showAllDocuments ? list : list.slice(0, this.initialDocumentsCount);
+    return this.showAllDocuments
+      ? list
+      : list.slice(0, this.initialDocumentsCount);
   }
 
   documentViewAll() {
-    this.showAllDocuments = !this.showAllDocuments;
+    this.showAllDocuments = !this.showAllDocuments
+  }
+
+  downloadDocument(doc: any) {
+    const link = document.createElement('a');
+    link.href = doc.url;              // file URL from API
+    link.download = doc.fileName || doc.name; // download name
+    link.target = '_blank';
+    link.click();
   }
 
   openApplication(app: any) {

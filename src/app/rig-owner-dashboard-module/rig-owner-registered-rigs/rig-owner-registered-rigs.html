@@ -1,0 +1,75 @@
+<div class="max-w-7xl mx-auto">
+
+    
+
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm mt-10">
+
+        <!-- HEADER -->
+        <div class="px-6 py-5 ">
+            <h2 class="font-medium text-lg">My Registered Rigs</h2>
+            <p class="text-sm text-gray-500">
+                All rigs registered under your license
+            </p>
+        </div>
+
+        <!-- RIG LIST -->
+        <div class="px-6 py-4 space-y-4">
+
+            <div *ngFor="let rig of documents()"
+                class="p-4 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
+                <div class="flex items-start justify-between">
+
+                    <!-- LEFT CONTENT -->
+                    <div class="space-y-3">
+
+                        <!-- RIG NUMBER + STATUS -->
+                        <div class="flex items-center gap-3">
+                            <h4 class="font-medium text-gray-900">
+                                {{ rig.registrationNumber }}
+                            </h4>
+
+                            <span class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium"
+                                [ngClass]="{
+                                    'bg-green-50 text-green-700 border-green-200': rig.status === 'ACTIVE'
+                                }">
+                                {{ rig.status}}
+                            </span>
+                        </div>
+
+                        <!-- DETAILS GRID -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-sm">
+                            <div>
+                                <span class="text-gray-500">Type:</span>
+                                <span class="ml-2 font-medium">{{ rig.rigType }}</span>
+                            </div>
+
+                            <div>
+                                <span class="text-gray-500">Capacity:</span>
+                                <span class="ml-2 font-medium">{{ rig.capacity }}</span>
+                            </div>
+
+                            <div>
+                                <span class="text-gray-500">Location:</span>
+                                <span class="ml-2 font-medium">{{ rig.district }}</span>
+                            </div>
+
+                            <div>
+                                <span class="text-gray-500">Last Movement:</span>
+                                <span class="ml-2 font-medium">{{ rig.lastMovement }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VIEW DETAILS -->
+                    <button
+                        class="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-3 py-1.5 rounded-md">
+                        View Details
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

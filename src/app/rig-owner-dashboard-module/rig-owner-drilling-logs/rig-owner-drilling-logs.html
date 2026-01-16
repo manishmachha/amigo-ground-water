@@ -1,0 +1,69 @@
+<div class="max-w-6xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+
+    <!-- Header -->
+    <h2 class="text-xl font-semibold text-gray-900">
+        Pending Drilling Logs
+    </h2>
+    <p class="text-sm text-gray-500 mt-1">
+        Submit mandatory drilling logs for completed wells
+    </p>
+
+    <!-- Cards -->
+    <div class="mt-6 space-y-4">
+
+        <div *ngFor="let log of drillingLogsInfo()"
+            class="flex items-center justify-between bg-orange-50 border border-orange-200 rounded-xl px-6 py-5">
+
+            <!-- Left Content -->
+            <div class="space-y-2">
+
+                <!-- Rig ID & Status -->
+                <div class="flex items-center gap-3">
+                    <span class="font-medium text-gray-900">
+                        {{ log.rigNumber }}
+                    </span>
+
+                    <span class="text-xs font-medium px-3 py-1 rounded-full
+                   bg-orange-100 text-orange-700 border border-orange-300">
+                        {{ log.status }}
+                    </span>
+                </div>
+
+                <!-- Details -->
+                <div class="flex flex-wrap gap-8 text-sm text-gray-600">
+                    <div>
+                        Well Location:
+                        <span class="font-medium text-gray-900">
+                            {{ log.well_location.district }},
+                            {{ log.well_location.mandal }},
+                            {{ log.well_location.village }}
+                        </span>
+                    </div>
+
+
+                    <div>
+                        Drilled Date:
+                        <span class="font-medium text-gray-900">
+                            {{ log.drillingDate }}
+                        </span>
+                    </div>
+
+                    <div>
+                        Depth:
+                        <span class="font-medium text-gray-900">
+                            {{ log.well_depth }}m
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button routerLink="/drilling-log" class="bg-orange-500 hover:bg-orange-600 text-white
+               font-medium px-5 py-2 rounded-lg transition cursor-pointer">
+                Submit Log
+            </button>
+
+        </div>
+
+    </div>
+</div>

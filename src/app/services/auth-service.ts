@@ -10,9 +10,6 @@ export class AuthService {
   private isLoggedIn: boolean = sessionStorage.getItem('isLoggedIn') === 'true';
   private role: string | null = sessionStorage.getItem('userRole');
 
-  constructor(private http: HttpClient) {}
-
-
 
   setAuthToken(token: string): void {
     this.authToken = token;

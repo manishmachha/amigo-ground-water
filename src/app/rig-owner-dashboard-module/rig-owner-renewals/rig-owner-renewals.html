@@ -1,0 +1,93 @@
+<div class="max-w-6xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+
+    <!-- Header -->
+    <h2 class="text-xl font-semibold text-gray-900">
+        Upcoming Renewals
+    </h2>
+    <p class="text-sm text-gray-500 mt-1">
+        Permits and registrations due for renewal
+    </p>
+
+    <!-- Renewal Cards -->
+    <div class="mt-6 space-y-4">
+
+        <!--  WHEN DATA EXISTS -->
+        <ng-container *ngIf="hasUpcomingRenewals(); else noRenewals">
+
+            <div *ngFor="let item of documentsExpiringSoon()" class="flex items-center justify-between
+             bg-yellow-50 border border-yellow-200
+             rounded-xl px-6 py-5">
+
+                <!-- Left -->
+                <div class="space-y-2">
+
+                    <div class="flex items-center gap-3">
+                        <i class="bi bi-calendar-event text-yellow-600 text-lg"></i>
+                        <span class="font-semibold text-gray-900">
+                            {{ item.registrationNumber }}
+                        </span>
+                    </div>
+
+                    <div class="flex flex-wrap gap-10 text-sm text-gray-600">
+
+                        <div>
+                            Rig Type:
+                            <span class="font-medium text-gray-900">
+                                {{ item.rigType }}
+                            </span>
+                        </div>
+
+                        <div>
+                            Expiry Date:
+                            <span class="font-medium text-gray-900">
+                                {{
+                                item.registrationExpiryDate
+                                ? (item.registrationExpiryDate | date:'dd/MM/yyyy')
+                                : 'Not Available'
+                                }}
+                            </span>
+                        </div>
+
+                        <div>
+                            Total Expiry Days:
+                            <span class="font-medium text-yellow-700">
+                                {{ getTotalExpiryDays(item.registrationExpiryDate) ?? 'N/A' }}
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="bg-yellow-600 hover:bg-yellow-700
+               text-white font-medium
+               px-5 py-2 rounded-lg transition">
+                    Renew Now
+                </button>
+
+            </div>
+
+        </ng-container>
+
+        <!--  EMPTY STATE -->
+        <ng-template #noRenewals>
+            <div class="flex flex-col items-center justify-center
+                py-16 px-6
+                bg-gray-50 border border-dashed border-gray-300
+                rounded-xl text-center">
+
+                <i class="bi bi-check-circle text-green-500 text-4xl mb-4"></i>
+
+                <h3 class="text-lg font-semibold text-gray-900">
+                    No Upcoming Renewals
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    All registrations and permits are currently valid.
+                </p>
+            </div>
+        </ng-template>
+
+    </div>
+
+
+</div>
